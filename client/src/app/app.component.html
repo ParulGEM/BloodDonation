@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+<div
+  *ngIf="bloodDonationServiceData.successalert"
+  class="alert alert-success alert-info position-fixed top-0 end-0 w-40 rounded me-2 myclass"
+  role="alert"
+>
+  {{ bloodDonationServiceData.message }}
+</div>
+<div
+  *ngIf="bloodDonationServiceData.errralert"
+  class="alert alert-warning rounded me-2 alert-info position-fixed top-0 end-0 w-40 rounded me-2 myclass"
+  role="alert"
+>
+  {{ bloodDonationServiceData.message }}
+</div>
+
+<router-outlet></router-outlet>
