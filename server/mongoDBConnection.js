@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
-const url =
-  "mongodb+srv://parulsahni3282:Parul06gem@cluster0.k2lebtg.mongodb.net";
 
 const mongoDBConnections = () => {
   mongoose
-    .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(
+      "mongodb+srv://parulsahni3282:Parul06gem@cluster0.k2lebtg.mongodb.net/",
+      { useNewUrlParser: true, useUnifiedTopology: true }
+    )
     .then(() => {
       console.log("Connected successfully to MongoDB");
       // Perform database operations

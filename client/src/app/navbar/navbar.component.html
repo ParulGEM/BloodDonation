@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Navbar</a>
+    <a class="navbar-brand" routerLink="/">🩸 RedDrop</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -13,30 +13,109 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/user/login"
-            >Login</a
-          >
-        </li>
-      </ul>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a
-            class="nav-link active"
-            aria-current="page"
-            href="/user/registration"
-            >Registration</a
-          >
-        </li>
-      </ul>
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/donate/create"
-            >Donation</a
-          >
-        </li>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-bold">
+        <ng-container *ngIf="!bloodDonationdata.isLogin">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="/user/login"
+            >
+              Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="/user/registration"
+            >
+              Registration
+            </a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="bloodDonationdata.isLogin">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="/donate/create"
+            >
+              Donate
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="/mydonation"
+            >
+              My Donations
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="/search"
+            >
+              Search
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="navbar-brand" routerLink="/profile">
+              <img
+                src="assets/icon-4399701_1280.webp"
+                alt="Logo"
+                class="navbar-logo"
+                style="height: 30px"
+              />
+            </a>
+          </li>
+          <li class="nav-item">
+            <i
+              class="fas fa-bell m-2"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              <span class="badge badge-danger"></span>
+            </i>
+          </li>
+          <li *ngIf="bloodDonationdata.isLogin" class="nav-item m-2">
+            <button
+              style="height: 30px"
+              class="btn btn-danger"
+              (click)="logout()"
+            >
+              Logout
+            </button>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>
 </nav>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Notifications</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let msg of bloodDonationdata.userData.notification">
+            {{ msg }}
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

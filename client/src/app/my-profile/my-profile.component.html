@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 mt-5">
+      <h1 class="profile-title">Profile Picture</h1>
+      <mat-card class="profile-card">
+        <div class="card-content">
+          <div class="image-container">
+            <img src="assets\146035.png" style="height: 25%; width: 25%;" alt="Profile Picture" class="profile-picture " />
+          </div>
+          <div class="text-container">
+            <h5 class="profile-name">{{ userData.name }}</h5>
+            <p class="profile-text">Email: {{ userData.email }}</p>
+            <p class="profile-text">Phone: {{ userData.phone }}</p>
+            <p class="profile-text">User ID: {{ userData.userId }}</p>
+            <p class="profile-text">City: {{ userData.city }}</p>
+            <p class="profile-text">Country: {{ userData.country }}</p>
+            <p class="profile-text">State: {{ userData.state }}</p>
+            <p class="profile-text">User Type: {{ userData.userType }}</p>
+            <p class="profile-text">Verified: {{ userData.verified }}</p>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

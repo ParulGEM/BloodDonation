@@ -1,0 +1,16 @@
+.container {
+  max-width: 400px;
+}
+
+.form-group-sm label {
+  font-size: 0.875rem;
+}
+
+.form-control-sm {
+  height: 30px;
+  font-size: 0.875rem;
+  padding: 0.375rem 0.75rem;
+}
+.form-field-margin {
+  margin-bottom: 10px;
+}

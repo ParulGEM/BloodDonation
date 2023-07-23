@@ -1,10 +1,55 @@
 import { Injectable } from '@angular/core';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
 export class BloodDonationService {
-  userData: any;
+  constructor(
+    private snackBar: MatSnackBar,
+    private http: HttpClient,
+    private router: Router
+  ) {}
+  isLogin: boolean = false;
+  loginBydeafault = async () => {
+    const userEmail = localStorage.getItem('userEmail');
+    const userPassword = localStorage.getItem('userPassword');
+
+    if (userEmail && userPassword) {
+      const headers = new HttpHeaders();
+      const response: any = await this.http
+        .post(
+          'http://localhost:5000/user/login',
+          { email: userEmail, password: userPassword },
+          {
+            headers,
+          }
+        )
+        .toPromise();
+      if (response) {
+        if (response.status) {
+          this.saveUserData(response.data);
+          this.isLogin = true;
+
+          console.log('----> userData', this.userData);
+
+          this.showAlert('Success', `Success :${response.msg}`);
+          if (this.userData.userType === 'ADMIN') {
+            this.router.navigate(['/dashboard/']);
+          } else {
+            this.router.navigate(['/']);
+          }
+        } else {
+          this.showAlert('error', `error :${response.msg}`);
+        }
+      } else {
+        this.showAlert('error', `error :internal Server Error`);
+      }
+    }
+  };
+
+  userData: any = {};
   saveUserData(data: any) {
     this.userData = {
       name: data.name,
@@ -17,28 +62,17 @@ export class BloodDonationService {
       notification: data.notification,
       userType: data.userType,
       verified: data.verified,
-    };
+    }; 
   }
-
-  constructor() {}
-  errralert: boolean = false;
-  successalert: boolean = false;
-  message: string = '';
+  donationArray: [] = [];
 
   showAlert(type: string, msg: string) {
-    console.log('trigger');
-    if (type === 'error') {
-      console.log('trigger error');
-      this.errralert = true;
-    }
-    if (type === 'success') {
-      console.log('trigger success');
-      this.successalert = true;
-    }
-    this.message = msg;
-    setTimeout(() => {
-      this.errralert = false;
-      this.successalert = false;
-    }, 5000);
+    this.show(`📩 📩 ${msg}`);
+    return;
+  }
+  show(message: string, duration: number = 5000): void {
+    this.snackBar.open(message, '', {
+      duration: duration,
+    });
   }
 }

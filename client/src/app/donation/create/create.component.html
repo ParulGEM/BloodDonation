@@ -1,90 +1,378 @@
-<div class="container">
-  <h2>Registration Form</h2>
-  <form [formGroup]="donationForm" (ngSubmit)="onSubmit($event)">
-    <div class="form-group">
-      <label for="age">Age:</label>
-      <input
-        type="number"
-        class="form-control"
-        id="age"
-        formControlName="age"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="bloodGroup">Blood Group:</label>
-      <select
-        class="form-control"
-        id="bloodGroup"
-        formControlName="bloodGroup"
-        required
+<div class="bg-img mt-5">
+  <div class="container mt-2">
+    <h2 class="form-title">Fill Donation Details</h2>
+    <form
+      [formGroup]="donationForm"
+      (ngSubmit)="onSubmit($event)"
+      class="registration-form"
+    >
+      <div class="form-group">
+        <label>Blood Group</label>
+        <select
+          name="bloodGroup"
+          id="bloodGroup"
+          class="form-control"
+          formControlName="bloodGroup"
+          required
+        >
+          <option value="">Select blood group</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+        </select>
+
+        <span
+        [ngStyle]="{ color: 'red' }"
+        *ngIf="bloodGroup && bloodGroup.invalid && bloodGroup.touched"
+        >*Select a blood group</span
       >
-        <option value="">Select blood group</option>
-        <option value="A+">A+</option>
-        <option value="A-">A-</option>
-        <option value="B+">B+</option>
-        <option value="B-">B-</option>
-        <option value="O+">O+</option>
-        <option value="O-">O-</option>
-        <option value="AB+">AB+</option>
-        <option value="AB-">AB-</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Health Issue:</label><br />
-      <div class="form-check form-check-inline">
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label>Gender:</label>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="gender"
+                value="male"
+                required
+              />
+              <span
+              [ngStyle]="{ color: 'red' }"
+              *ngIf="gender && gender.invalid && gender.touched"
+              >*Select Gender</span
+            >
+              <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="gender"
+                value="female"
+                required
+              />
+              <label class="form-check-label">Female</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="gender"
+                value="other"
+                required
+              />
+              <label class="form-check-label">Other</label>
+            </div>
+
+          </div>
+
+          <div class="col-md-6">
+            <label>Have you donated previously? </label>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="healthIssue"
+                value="yes"
+              />
+              <label class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                formControlName="healthIssue"
+                value="no"
+              />
+              <label class="form-check-label">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Last Donation Time</label>
         <input
-          class="form-check-input"
-          type="radio"
-          id="healthIssueYes"
-          value="yes"
-          formControlName="healthIssue"
+          class="form-control"
+          type="date"
+          formControlName="lastDonationTime"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Description of Health Condition</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          formControlName="descriptionHealthCondition"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Medicine Consumption</label>
+        <input
+          class="form-control"
+          type="text"
+          formControlName="medicineConsumption"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Birth Date</label>
+        <input
+          class="form-control"
+          type="date"
+          formControlName="birthDate"
           required
         />
-        <label class="form-check-label" for="healthIssueYes">Yes</label>
+        <span
+        [ngStyle]="{ color: 'red' }"
+        *ngIf="birthDate && birthDate.invalid && birthDate.touched"
+        >*Select your DOB</span
+      >
       </div>
-      <div class="form-check form-check-inline">
+
+      <div class="form-group">
+        <label>Occupation</label>
         <input
-          class="form-check-input"
-          type="radio"
-          id="healthIssueNo"
-          value="no"
-          formControlName="healthIssue"
+          class="form-control"
+          type="text"
+          formControlName="occupation"
           required
         />
-        <label class="form-check-label" for="healthIssueNo">No</label>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="lastDonationTime">Last Donation Time:</label>
-      <input
-        type="date"
-        class="form-control"
-        id="lastDonationTime"
-        formControlName="lastDonationTime"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="descriptionHealthCondition"
-        >Description of Health Condition:</label
+        <span
+        [ngStyle]="{ color: 'red' }"
+        *ngIf="occupation && occupation.invalid && occupation.touched"
+        >*Enter your occupation</span
       >
-      <textarea
-        class="form-control"
-        id="descriptionHealthCondition"
-        rows="3"
-        formControlName="descriptionHealthCondition"
-      ></textarea>
-    </div>
-    <div class="form-group">
-      <label for="medicineConsumption">Medicine Consumption:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="medicineConsumption"
-        formControlName="medicineConsumption"
-      />
-    </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-  </form>
+      </div>
+
+      <div class="form-group">
+        <label>Address / Colony / Village</label>
+        <input
+          class="form-control"
+          type="text"
+          formControlName="centerColonyVillage"
+          required
+        />
+
+        <span
+        [ngStyle]="{ color: 'red' }"
+        *ngIf="centerColonyVillage && centerColonyVillage.invalid && centerColonyVillage.touched"
+        >*Enter your Address/Colony/Village</span
+      >
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label>Weight</label>
+            <input
+              class="form-control"
+              type="number"
+              formControlName="weight"
+
+            />
+          </div>
+          <div class="col-md-6">
+            <label>Pulse</label>
+            <input
+              class="form-control"
+              type="number"
+              formControlName="pulse"
+
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label>Haemoglobin</label>
+            <input
+              class="form-control"
+              type="number"
+              formControlName="hb"
+
+            />
+          </div>
+          <div class="col-md-6">
+            <label>Blood Pressure</label>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="bp"
+
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Temperature</label>
+        <input
+          class="form-control"
+          type="text"
+          formControlName="temperature"
+
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Had any of these in the past six months?</label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            formControlName="tattooing"
+          />
+          <label class="form-check-label">Tattooing</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            formControlName="earPiercing"
+          />
+          <label class="form-check-label">Ear piercing</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            formControlName="dentalExtraction"
+          />
+          <label class="form-check-label">Dental extraction</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-group-label"
+          >Do you have or had any of these diseases?</label
+        >
+        <mat-checkbox formControlName="heartDisease"
+          >Heart Disease</mat-checkbox
+        >
+        <mat-checkbox formControlName="cancer"
+          >Cancer/Malignant Disease</mat-checkbox
+        >
+        <mat-checkbox formControlName="diabetes">Diabetes</mat-checkbox>
+        <mat-checkbox formControlName="hepatitisBC">Hepatitis B/C</mat-checkbox>
+        <mat-checkbox formControlName="std"
+          >Sexually Transmitted Diseases</mat-checkbox
+        >
+        <mat-checkbox formControlName="typhoid"
+          >Typhoid (last one year)</mat-checkbox
+        >
+        <mat-checkbox formControlName="lungDisease">Lung Disease</mat-checkbox>
+        <mat-checkbox formControlName="tuberculosis">Tuberculosis</mat-checkbox>
+        <mat-checkbox formControlName="allergicDisease"
+          >Allergic Disease</mat-checkbox
+        >
+        <mat-checkbox formControlName="kidneyDisease"
+          >Kidney Disease</mat-checkbox
+        >
+        <mat-checkbox formControlName="epilepsy"
+          >Epilepsy (Charay rog)</mat-checkbox
+        >
+        <mat-checkbox formControlName="malaria"
+          >Malaria (six months)</mat-checkbox
+        >
+        <mat-checkbox formControlName="bleedingTendency"
+          >Abnormal Bleeding Tendency</mat-checkbox
+        >
+        <mat-checkbox formControlName="jaundice"
+          >Jaundice (last one year)</mat-checkbox
+        >
+        <mat-checkbox formControlName="faintingSpells"
+          >Fainting Spells</mat-checkbox
+        >
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-group-label"
+          >Have you taken any of these in the last 72 hours?</label
+        >
+        <mat-checkbox formControlName="antibiotics">Antibiotics</mat-checkbox>
+        <mat-checkbox formControlName="steroids">Steroids</mat-checkbox>
+        <mat-checkbox formControlName="aspirin">Aspirin</mat-checkbox>
+        <mat-checkbox formControlName="vaccinations">Vaccinations</mat-checkbox>
+        <mat-checkbox formControlName="alcohol">Alcohol</mat-checkbox>
+        <mat-checkbox formControlName="dogBiteRabiesVaccine"
+          >Dog Bite Rabies Vaccine (1 year)</mat-checkbox
+        >
+      </div>
+      <div class="form-group">
+        <label>Any surgery or blood transfusion in the last six months?</label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            formControlName="surgeryHistoryMajor"
+          />
+          <label class="form-check-label">Major</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            formControlName="surgeryHistoryMinor"
+          />
+          <label class="form-check-label">Minor</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            formControlName="surgeryHistoryBloodTransfusion"
+          />
+          <label class="form-check-label">Blood Transfusion</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>When can you donate blood?</label>
+        <input
+          class="form-control"
+          type="date"
+          formControlName="AvailableDate"
+          required
+        />
+
+        <span
+        [ngStyle]="{ color: 'red' }"
+        *ngIf="AvailableDate && AvailableDate.invalid && AvailableDate.touched"
+        >*Enter the availability date</span
+      >
+      </div>
+      <div class="form-group">
+        <label>Any Specific Time</label>
+        <input
+          class="form-control"
+          type="text"
+          formControlName="AvailableTime"
+          required
+        />
+
+        <span
+        [ngStyle]="{ color: 'red' }"
+        *ngIf="AvailableTime && AvailableTime.invalid && AvailableTime.touched"
+        >*Enter the availability time</span
+      >
+      </div>
+
+      <div class="form-group submit-button-container">
+        <button class="btn btn-danger" [disabled]="donationForm.invalid" type="submit">Save Details</button>
+      </div>
+    </form>
+  </div>
 </div>

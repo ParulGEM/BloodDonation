@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
 
 @Component({
@@ -8,61 +8,117 @@ import { BloodDonationService } from 'src/app/service/blood-donation.service';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css'],
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit {
+  donationForm!: FormGroup;
   bloodDonationServiceData: any;
+
   constructor(
     private http: HttpClient,
-    private bloodDonationService: BloodDonationService
+    private bloodDonationService: BloodDonationService,
+    private formBuilder: FormBuilder
   ) {
     this.bloodDonationServiceData = bloodDonationService;
   }
-  donationForm = new FormGroup({
-    age: new FormControl('', Validators.required),
-    bloodGroup: new FormControl('', Validators.required),
-    healthIssue: new FormControl('', Validators.required),
-    lastDonationTime: new FormControl('', Validators.required),
-    descriptionHealthCondition: new FormControl(''),
-    medicineConsumption: new FormControl(''),
-  });
-  get age() {
-    return this.donationForm.get('age');
+  ngOnInit(): void {
+    this.createDonationForm();
+  }
+  createDonationForm(): void {
+    this.donationForm = this.formBuilder.group({
+      bloodGroup: ['', Validators.required],
+      healthIssue: ['', Validators.required],
+      lastDonationTime: [''],
+      descriptionHealthCondition: [''],
+      medicineConsumption: [''],
+      birthDate: ['', Validators.required],
+      gender: ['', Validators.required],
+      occupation: ['', Validators.required],
+      centerColonyVillage: ['', Validators.required],
+      weight: [''],
+      pulse: [''],
+      hb: [''],
+      bp: [''],
+      temperature: [''],
+      tattooing: [false],
+      earPiercing: [false],
+      dentalExtraction: [false],
+      heartDisease: [false],
+      cancer: [false],
+      diabetes: [false],
+      hepatitisBC: [false],
+      std: [false],
+      typhoid: [false],
+      lungDisease: [false],
+      tuberculosis: [false],
+      allergicDisease: [false],
+      kidneyDisease: [false],
+      epilepsy: [false],
+      malaria: [false],
+      bleedingTendency: [false],
+      jaundice: [false],
+      faintingSpells: [false],
+      antibiotics: [false],
+      steroids: [false],
+      aspirin: [false],
+      vaccinations: [false],
+      alcohol: [false],
+      dogBiteRabiesVaccine: [false],
+      surgeryHistoryMinor: [false],
+      surgeryHistoryMajor: [false],
+      surgeryHistoryBloodTransfusion: [false],
+      AvailableDate: ['', Validators.required],
+      AvailableTime: ['', Validators.required],
+    });
   }
   get bloodGroup() {
     return this.donationForm.get('bloodGroup');
   }
+
+  get gender() {
+    return this.donationForm.get('gender');
+  }
+
+  get birthDate() {
+    return this.donationForm.get('birthDate');
+  }
+
   get healthIssue() {
     return this.donationForm.get('healthIssue');
   }
+
+  get occupation() {
+    return this.donationForm.get('occupation');
+  }
+
+  get centerColonyVillage() {
+    return this.donationForm.get('centerColonyVillage');
+  }
+
   get lastDonationTime() {
     return this.donationForm.get('lastDonationTime');
   }
-  get descriptionHealthCondition() {
-    return this.donationForm.get('descriptionHealthCondition');
-  }
-  get medicineConsumption() {
-    return this.donationForm.get('medicineConsumption');
+  get AvailableDate() {
+    return this.donationForm.get('AvailableDate');
   }
 
+  get AvailableTime() {
+    return this.donationForm.get('AvailableTime');
+  } 
   async onSubmit(event: Event) {
     event.preventDefault();
     if (this.donationForm.valid) {
       const headers = new HttpHeaders();
 
-      let bodyObj = {
-        createdBy: this.bloodDonationServiceData.userData.userId,
-        country: this.bloodDonationServiceData.userData.country,
-        city: this.bloodDonationServiceData.userData.city,
-        state: this.bloodDonationServiceData.userData.state,
-        bloodGroup: this.bloodGroup?.value,
-        heathissue: this.healthIssue?.value,
-        lastDonationTime: `${this.lastDonationTime?.value}`,
-        descriptionHealthCondition: this.descriptionHealthCondition?.value,
-        medicineConsumption: this.medicineConsumption?.value,
-      };
       const response: any = await this.http
-        .post('http://localhost:5000/donation/create', bodyObj, {
-          headers,
-        })
+        .post(
+          'http://localhost:5000/donation/create',
+          {
+            ...this.donationForm.value,
+            createdBy: this.bloodDonationServiceData.userData.userId,
+          },
+          {
+            headers,
+          }
+        )
         .toPromise();
       if (response) {
         if (response.status) {
@@ -83,6 +139,8 @@ export class CreateComponent {
           `error :internal Server Error`
         );
       }
+    } else {
+      alert('Not there');
     }
   }
 }

@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
+import { Router } from '@angular/router';
 BloodDonationService;
 @Component({
   selector: 'app-registration',
@@ -16,7 +13,8 @@ export class RegistrationComponent {
   bloodDonationServiceData: any;
   constructor(
     private http: HttpClient,
-    private bloodDonationService: BloodDonationService
+    private bloodDonationService: BloodDonationService,
+    private router: Router
   ) {
     this.bloodDonationServiceData = bloodDonationService;
   }
@@ -80,6 +78,13 @@ export class RegistrationComponent {
               'success',
               `success :${response.msg}`
             );
+
+            if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
+              this.router.navigate(['/dashboard/']);
+            } else {
+              this.router.navigate(['/']);
+            }
+            this.router.navigate(['/']);
           } else {
             this.bloodDonationServiceData.showAlert(
               'error',
@@ -92,60 +97,62 @@ export class RegistrationComponent {
             `error :internal Server Error`
           );
         }
-      } else {
-        if (this.name?.invalid) {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'ERROR :  Name is Invalid'
-          );
-          return;
-        }
-        if (this.email?.invalid) {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'ERROR :  email is Invalid'
-          );
-          return;
-        }
-        if (this.phone?.invalid) {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'ERROR :  phone is Invalid'
-          );
-          return;
-        }
-        if (this.password?.invalid) {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'ERROR :  password is Invalid'
-          );
-          return;
-        }
-        if (this.city?.invalid) {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'ERROR :  city is Invalid'
-          );
-          return;
-        }
-        if (this.state?.invalid) {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'ERROR :  state is Invalid'
-          );
-          return;
-        }
-        if (this.country?.invalid) {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'ERROR :  country is Invalid'
-          );
-          return;
-        }
-        this.bloodDonationServiceData.showAlert('error', 'invalid form ');
       }
+      
+      // else {
+      //   if (this.name?.invalid) {
+      //     this.bloodDonationServiceData.showAlert(
+      //       'error',
+      //       'ERROR :  Name is Invalid'
+      //     );
+      //     return;
+      //   }
+      //   if (this.email?.invalid) {
+      //     this.bloodDonationServiceData.showAlert(
+      //       'error',
+      //       'ERROR :  Email is Invalid'
+      //     );
+      //     return;
+      //   }
+      //   if (this.phone?.invalid) {
+      //     this.bloodDonationServiceData.showAlert(
+      //       'error',
+      //       'ERROR :  Phone is Invalid'
+      //     );
+      //     return;
+      //   }
+      //   if (this.password?.invalid) {
+      //     this.bloodDonationServiceData.showAlert(
+      //       'error',
+      //       'ERROR :  password is Invalid'
+      //     );
+      //     return;
+      //   }
+      //   if (this.city?.invalid) {
+      //     this.bloodDonationServiceData.showAlert(
+      //       'error',
+      //       'ERROR :  city is Invalid'
+      //     );
+      //     return;
+      //   }
+      //   if (this.state?.invalid) {
+      //     this.bloodDonationServiceData.showAlert(
+      //       'error',
+      //       'ERROR :  state is Invalid'
+      //     );
+      //     return;
+      //   }
+      //   if (this.country?.invalid) {
+      //     this.bloodDonationServiceData.showAlert(
+      //       'error',
+      //       'ERROR :  country is Invalid'
+      //     );
+      //     return;
+      //   }
+      //   this.bloodDonationServiceData.showAlert('Error', 'Invalid form ');
+      // }
     } catch (error) {
-      this.bloodDonationServiceData.showAlert('error', error);
+      this.bloodDonationServiceData.showAlert('Error', error);
     }
   }
 }

@@ -1,0 +1,35 @@
+<h1 class="text-center">Blood Donor List</h1>
+<div class="container m-auto mt-5">
+  <ul>
+    <li
+      *ngFor="let donation of bloodDonationServiceData.donationArray"
+      class="booking-card shadow "
+      [style.background-image]="
+        'url(\assets/bloodDonation/' + donation.bloodGroup + '.png\)'
+      "
+    >
+      <div class="book-container">
+        <div class="content">
+          <button class="btn" (click)="addDonation(donation)">Get it</button>
+        </div>
+      </div>
+      <div class="informations-container">
+        <h2 class="title">{{ donation.city }}</h2>
+        <p class="sub-title">{{ donation.state }}-{{ donation.country }}</p>
+
+        <div class="more-information">
+          <p>Blood Group : {{ donation.bloodGroup }}</p>
+
+          <p>Heath Issue : {{ donation.heathissue }}</p>
+
+          <p>last Donation Time : {{ donation.lastDonationTime }}</p>
+          <p>medicine Consumption : {{ donation.medicineConsumption }}</p>
+
+          <p class="disclaimer">
+            Description- {{ donation.descriptionHealthCondition }}
+          </p>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

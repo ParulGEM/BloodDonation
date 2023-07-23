@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +13,8 @@ export class LoginComponent {
   bloodDonationServiceData: any;
   constructor(
     private http: HttpClient,
-    private bloodDonationService: BloodDonationService
+    private bloodDonationService: BloodDonationService,
+    private router: Router
   ) {
     this.bloodDonationServiceData = bloodDonationService;
   }
@@ -31,6 +34,7 @@ export class LoginComponent {
     return this.loginForm.get('email');
   }
   async onSubmit(event: Event) {
+    event.preventDefault();
     if (this.loginForm.valid) {
       const headers = new HttpHeaders();
       const response: any = await this.http
@@ -41,10 +45,21 @@ export class LoginComponent {
       if (response) {
         if (response.status) {
           this.bloodDonationServiceData.saveUserData(response.data);
+          this.bloodDonationServiceData.isLogin = true;
+          localStorage.setItem('userEmail', this.email?.value || 'NA');
+          localStorage.setItem('userPassword', this.password?.value || 'NA');
+
+          console.log('----> userData', this.bloodDonationServiceData.userData);
+
           this.bloodDonationServiceData.showAlert(
             'success',
             `success :${response.msg}`
           );
+          if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
+            this.router.navigate(['/dashboard/']);
+          } else {
+            this.router.navigate(['/']);
+          }
         } else {
           this.bloodDonationServiceData.showAlert(
             'error',
@@ -59,4 +74,5 @@ export class LoginComponent {
       }
     }
   }
+  
 }
