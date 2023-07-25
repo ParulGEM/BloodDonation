@@ -50,7 +50,7 @@ const routes: Routes = [
     ],
   },
   { path: 'details/:id', component: DonationDetailsComponent },
-  {
+  { 
     path: 'donate',
     children: [{ path: 'create', component: CreateComponent }],
   },

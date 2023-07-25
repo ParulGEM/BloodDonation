@@ -35,12 +35,10 @@ export class FilterComponent {
     const paramsState = new HttpParams().set('key', 'state');
     const paramscity = new HttpParams().set('key', 'city');
     const paramsCountry = new HttpParams().set('key', 'country');
-
     this.http
       .get('http://localhost:5000/donation/location', { params: paramsCountry })
       .subscribe(
         (response: any) => {
-
           this.countryArry = response.data; // Assign response data to countryArry
         },
         (error) => {
@@ -64,7 +62,6 @@ export class FilterComponent {
       .get('http://localhost:5000/donation/location', { params: paramscity })
       .subscribe(
         (response: any) => {
-
           this.cityarry = response.data; // Assign response data to countryArry
         },
         (error) => {
@@ -95,8 +92,10 @@ export class FilterComponent {
       params['state'] = stateValue;
     }
     if (bloodGroupValue) {
+      //params.bloodGroup=bloodGroupValue
       params['bloodGroup'] = bloodGroupValue;
     }
+
 
     // const headers = new HttpHeaders()
     this.http

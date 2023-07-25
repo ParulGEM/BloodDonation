@@ -8,23 +8,6 @@ import { BloodDonationService } from '../service/blood-donation.service';
   styleUrls: ['./my-component.component.css'],
 })
 export class MyComponentComponent implements OnInit {
-  // displayedColumns: string[] = [
-  //   'Country',
-  //   'City',
-  //   'State',
-  //   'Blood Group',
-  //   'Gender',
-  //   'Health Issue',
-  //   'Last Donation Time',
-  //   'Description of Health Condition',
-  //   'Medicine Consumption',
-  //   'Verified',
-  //   'Created By',
-  //   'Requested',
-  //   'Approved',
-  //   'Recipient: Name',
-  //   'Recipient: Email',
-  // ];
 
   myDonationData: any = [];
   bloodDonationServiceData: any;
@@ -46,11 +29,11 @@ export class MyComponentComponent implements OnInit {
           (response: any) => {
             if (response.status) {
               this.myDonationData = response.data;
-              this.bloodDonationServiceData.showAlert('success', response.msg);
+              this.bloodDonationServiceData.showAlert('Success', response.msg);
 
               console.log('====>>> BloodDonation ', this.myDonationData);
             } else {
-              this.bloodDonationServiceData.showAlert('error', response.msg);
+              this.bloodDonationServiceData.showAlert('Error', response.msg);
             }
           },
           (error) => {

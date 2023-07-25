@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
     } else {
       this.bloodDonationServiceData.showAlert('error', 'internal server error');
     }
-
   }
   title = 'client';
 }

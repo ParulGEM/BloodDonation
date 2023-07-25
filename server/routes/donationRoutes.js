@@ -431,11 +431,11 @@ router.get("/my-donation", async (req, res) => {
 
     if (!findDonation) {
       return res.json({
-        msg: "no Data Found",
+        msg: "No Data Found",
         status: false,
         data: [],
       });
-    }
+    } 
     return res.json({
       msg: " Data Found",
       status: true,
@@ -466,7 +466,7 @@ router.get("/location", async (req, res) => {
     .distinct(`${key}`);
   if (DistictKey.length === 0) {
     return res.json({
-      msg: "no Data Found",
+      msg: "No Data Found",
       status: false,
       data: [],
     }); 
@@ -477,6 +477,7 @@ router.get("/location", async (req, res) => {
     data: DistictKey,
   });
 });
+
 router.put("/edit", async (req, res) => {
   const {
     donationId,
