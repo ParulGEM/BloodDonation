@@ -5,7 +5,11 @@ import userSchema from "../model/userModel.js";
 import Joi from "joi";
 const router = express.Router();
 import senMail from "../helpers/sendMails.js";
-router.post("/create", async (req, res) => {
+import mailsHtml from "../helpers/mailsHtml.js";
+
+import serverError from "../helpers/serverError.js";
+
+router.post("/create", async (req, res, next) => {
   try {
     // const {
     //   createdBy,
@@ -81,10 +85,69 @@ router.post("/create", async (req, res) => {
       surgeryHistoryBloodTransfusion, //done
       createdBy,
       AvailableDate,
-      AvailableTime
+      AvailableTime,
     } = req.body;
-  
-    let AvailableDateNTime=`On ${AvailableDate} at  ${AvailableTime}`
+
+    const donationSchema = Joi.object({
+      bloodGroup: Joi.string()
+        .valid("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
+        .required(),
+      healthIssue: Joi.string().valid("yes", "no").required(),
+      lastDonationTime: Joi.date().iso().required(),
+      descriptionHealthCondition: Joi.string().required(),
+      medicineConsumption: Joi.string().required(),
+      birthDate: Joi.date().iso().required(),
+      gender: Joi.string().valid("male", "female", "other").required(),
+      occupation: Joi.string().required(),
+      centerColonyVillage: Joi.string().required(),
+      weight: Joi.number().positive().required(),
+      pulse: Joi.number().positive().required(),
+      hb: Joi.number().positive().required(),
+      bp: Joi.string().required(),
+      temperature: Joi.string().required(),
+      tattooing: Joi.boolean().required(),
+      earPiercing: Joi.boolean().required(),
+      dentalExtraction: Joi.boolean().required(),
+      heartDisease: Joi.boolean().required(),
+      cancer: Joi.boolean().required(),
+      diabetes: Joi.boolean().required(),
+      hepatitisBC: Joi.boolean().required(),
+      std: Joi.boolean().required(),
+      typhoid: Joi.boolean().required(),
+      lungDisease: Joi.boolean().required(),
+      tuberculosis: Joi.boolean().required(),
+      allergicDisease: Joi.boolean().required(),
+      kidneyDisease: Joi.boolean().required(),
+      epilepsy: Joi.boolean().required(),
+      malaria: Joi.boolean().required(),
+      bleedingTendency: Joi.boolean().required(),
+      jaundice: Joi.boolean().required(),
+      faintingSpells: Joi.boolean().required(),
+      antibiotics: Joi.boolean().required(),
+      steroids: Joi.boolean().required(),
+      aspirin: Joi.boolean().required(),
+      vaccinations: Joi.boolean().required(),
+      alcohol: Joi.boolean().required(),
+      dogBiteRabiesVaccine: Joi.boolean().required(),
+      surgeryHistoryMinor: Joi.boolean().required(),
+      surgeryHistoryMajor: Joi.boolean().required(),
+      surgeryHistoryBloodTransfusion: Joi.boolean().required(),
+      AvailableDate: Joi.date().iso().required(),
+      AvailableTime: Joi.string().required(),
+      createdBy: Joi.string().required(),
+    });
+
+    const validationResult = donationSchema.validate(req.body);
+
+    if (validationResult.error) {
+      const errorMessage = validationResult.error.details
+        .map((detail) => detail.message)
+        .join(", ");
+      console.error("Validation Error:", errorMessage);
+      return next(new serverError(errorMessage, 500));
+    }
+
+    let AvailableDateNTime = `On ${AvailableDate} at  ${AvailableTime}`;
     let lastSixMonth = `${tattooing ? "tattooing , " : ""}${
       earPiercing ? "ear Piercing , " : ""
     }${dentalExtraction ? "dental Extraction" : ""}`;
@@ -110,27 +173,15 @@ router.post("/create", async (req, res) => {
     }${aspirin ? "Aspirin , " : ""}${vaccinations ? "Vaccinations , " : ""}${
       alcohol ? "Alcohol , " : ""
     }${dogBiteRabiesVaccine ? "Dog Bite Rabies Vaccine (1 year)" : ""}`;
-  
 
     let surgeryHistoryString = `${surgeryHistoryMajor ? "Major , " : ""}${
       surgeryHistoryMinor ? "Minor , " : ""
     }${surgeryHistoryBloodTransfusion ? "Blood Transfusion  " : ""}`;
 
     const findUser = await userSchema.findById(createdBy);
-    if (!findUser) {
-      return res.json({
-        msg: "inValid user",
-        status: false,
-        data: {},
-      });
-    } 
-    if (!findUser.verified) {
-      return res.json({
-        msg: "user not verified",
-        status: false,
-        data: {},
-      });
-    }
+    if (!findUser) return next(new serverError("inValid user", 409));
+    if (!findUser.verified)
+      return next(new serverError("user not verified", 409));
     const donationCreate = await donationSchema.create({
       createdBy,
       country: findUser.country.toUpperCase(),
@@ -153,43 +204,22 @@ router.post("/create", async (req, res) => {
       lastSixMonth,
       sufferFrom,
       taking,
-      surgeryHistoryString,AvailableDateNTime
+      surgeryHistoryString,
+      AvailableDateNTime,
     });
 
-    if (!donationCreate) {
-      return res.json({
-        msg: "Cannot save the donation",
-        status: false,
-        data: {},
-      });
-    }
+    if (!donationCreate)
+      return next(new serverError("Cannot save the donation", 500));
+
     await userSchema.findByIdAndUpdate(findUser._id, {
-      $push: { notification: "You Created a Blood Donation" },
+      $push: { notification: "you created a Blood Donation" },
     });
 
-    const htmlcode = `
-  <html>
-  <head>
-    <title>Blood Donation Confirmation</title>
-  </head>
-  <body>
-    <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
-      <h2 style="text-align: center;">Blood Donation Confirmation</h2>
-      <p>Dear ${findUser.name},</p>
-      <p>Thank you for your blood donation. Your contribution has been received and is awaiting verification by the admin.</p>
-      <p>Donation Details:</p>
-      <ul>
-        <li><strong>Name:</strong> ${findUser.name}</li>
-        <li><strong>Email:</strong> ${findUser.email}</li>
-        <li><strong>Blood Group:</strong> ${bloodGroup}</li>
-      </ul>
-      <p>The admin will review your donation soon. We appreciate your support and will notify you once your donation is verified.</p>
-      <p>Thank you for your generosity!</p>
-      <p>Best regards,<br>The Blood Donation Team</p>
-    </div>
-  </body>
-  </html>
-  `;
+    const htmlcode = mailsHtml.createDonation(
+      findUser.name,
+      findUser.email,
+      bloodGroup
+    );
 
     senMail(
       findUser.email,
@@ -199,20 +229,16 @@ router.post("/create", async (req, res) => {
 
     return res.json({
       msg: "Donation saved",
-      status: true, 
+      status: true,
       data: donationCreate,
     });
   } catch (error) {
     console.log(error);
-    return res.json({
-      msg: "Internal error",
-      status: false,
-      data: {},
-    });
+    return next(new serverError("Internal Server Error", 500));
   }
 });
 
-router.post("/request", async (req, res) => {
+router.post("/request", async (req, res, next) => {
   try {
     const { recipienter, donationId } = req.body;
 
@@ -223,56 +249,26 @@ router.post("/request", async (req, res) => {
     const result = bodyValidation.validate(req.body);
     if (result.error) {
       console.log(result.error.details);
-      return res.json({
-        msg: `${result.error.details}`,
-        status: false,
-        data: {},
-      });
+      return next(new serverError(result.error.message, 404));
     }
 
     const findUser = await userSchema.findById(recipienter);
-    if (!findUser) {
-      return res.json({
-        msg: "inValid user",
-        status: false,
-        data: {},
-      });
-    }
-    if (!findUser.verified) {
-      return res.json({
-        msg: "user not verified",
-        status: false,
-        data: {},
-      });
-    }
+    if (!findUser) return next(new serverError("inValid user", 409));
+    if (!findUser.verified)
+      return next(new serverError("user not verified", 404));
 
     const findDonation = await donationSchema.findOne({ _id: donationId });
-    if (!findDonation) {
-      return res.json({
-        msg: "Invalid Donation Id",
-        status: false,
-        data: {},
-      });
-    }
+    if (!findDonation) return next(new serverError("Invalid Donation Id", 409));
     if (findDonation.createdBy.toString() === recipienter) {
-      return res.json({
-        msg: "Cant request own Donation",
-        status: false,
-        data: {},
-      });
+      return next(new serverError("Cant request own Donation", 409));
     }
     const updateDonation = await donationSchema.findByIdAndUpdate(donationId, {
       requested: true,
       recipienter,
     });
 
-    if (!updateDonation) {
-      return res.json({
-        msg: "donation cannot be requested",
-        status: false,
-        data: {},
-      });
-    }
+    if (!updateDonation)
+      return next(new serverError("donation cannot be requested", 409));
     return res.json({
       msg: "Donation saved",
       status: true,
@@ -280,15 +276,11 @@ router.post("/request", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.json({
-      msg: "Internal error",
-      status: false,
-      data: {},
-    });
+    return next(new serverError("Internal Server Error", 500));
   }
 });
 
-router.get("/filter", async (req, res) => {
+router.get("/filter", async (req, res, next) => {
   try {
     const {
       country,
@@ -311,11 +303,7 @@ router.get("/filter", async (req, res) => {
     const result = bodyValidation.validate(req.query);
     if (result.error) {
       console.log(result.error.details);
-      return res.json({
-        msg: `${result.error.details}`,
-        status: false,
-        data: {},
-      });
+      return next(new serverError(result.error.message, 409));
     }
 
     let filterQuery = { approved, verified, requested };
@@ -337,13 +325,7 @@ router.get("/filter", async (req, res) => {
       .populate("createdBy recipienter")
       .lean();
 
-    if (!findDonation) {
-      return res.json({
-        msg: "no Data Found",
-        status: false,
-        data: [],
-      });
-    }
+    if (!findDonation) return next(new serverError("no Data Found", 409));
     return res.json({
       msg: " Data Found",
       status: true,
@@ -351,15 +333,11 @@ router.get("/filter", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.json({
-      msg: "Internal error",
-      status: false,
-      data: {},
-    });
+    return next(new serverError("Internal Server ERror", 500));
   }
 });
 
-router.get("/details", async (req, res) => {
+router.get("/details", async (req, res, next) => {
   try {
     const { donationId } = req.query;
     const bodyValidation = Joi.object({
@@ -379,13 +357,7 @@ router.get("/details", async (req, res) => {
       .findById(donationId)
       .populate("createdBy")
       .lean();
-    if (!findDonation) {
-      return res.json({
-        msg: "no Data Found",
-        status: false,
-        data: [],
-      });
-    }
+    if (!findDonation) return next(new serverError("No Data Found", 500));
 
     return res.json({
       msg: " Data Found",
@@ -394,15 +366,11 @@ router.get("/details", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.json({
-      msg: "Internal error",
-      status: false,
-      data: {},
-    });
+    return next(new serverError("Internal Server ERror", 500));
   }
 });
 
-router.get("/my-donation", async (req, res) => {
+router.get("/my-donation", async (req, res, next) => {
   const { userId } = req.query;
   const bodyValidation = Joi.object({
     userId: Joi.string().required(),
@@ -410,32 +378,19 @@ router.get("/my-donation", async (req, res) => {
   const result = bodyValidation.validate(req.query);
   if (result.error) {
     console.log(result.error.details);
-    return res.json({
-      msg: `${result.error.details}`,
-      status: false,
-      data: {},
-    });
+    return next(new serverError(result.error.message, 500));
   }
   try {
     if (!userId) {
-      return res.json({
-        msg: "Send UserId",
-        status: false,
-        data: {},
-      });
+      return next(new serverError("Send UserId", 500));
     }
     const findDonation = await donationSchema
       .find({ $or: [{ recipienter: userId }, { createdBy: userId }] })
       .populate("createdBy recipienter")
       .lean();
 
-    if (!findDonation) {
-      return res.json({
-        msg: "No Data Found",
-        status: false,
-        data: [],
-      });
-    } 
+    if (!findDonation) return next(new serverError("No Data Found", 500));
+
     return res.json({
       msg: " Data Found",
       status: true,
@@ -443,10 +398,11 @@ router.get("/my-donation", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    return next(new serverError("Internal Server ERror", 500));
   }
 });
 
-router.get("/location", async (req, res) => {
+router.get("/location", async (req, res, next) => {
   const { key } = req.query;
   const bodyValidation = Joi.object({
     key: Joi.string().required(),
@@ -454,72 +410,19 @@ router.get("/location", async (req, res) => {
   const result = bodyValidation.validate(req.query);
   if (result.error) {
     console.log(result.error.details);
-    return res.json({
-      msg: `${result.error.details}`,
-      status: false,
-      data: {},
-    });
+    return next(new serverError(result.error.message, 500));
   }
 
   const DistictKey = await donationSchema
     .find({ requested: false, approved: false })
     .distinct(`${key}`);
   if (DistictKey.length === 0) {
-    return res.json({
-      msg: "No Data Found",
-      status: false,
-      data: [],
-    }); 
+    return next(new serverError("No Data Found", 500));
   }
   return res.json({
     msg: " Data Found",
     status: true,
     data: DistictKey,
-  });
-});
-
-router.put("/edit", async (req, res) => {
-  const {
-    donationId,
-    country,
-    city,
-    state,
-    bloodGroup,
-    heathissue,
-    lastDonationTime,
-    descriptionHealthCondition,
-    medicineConsumption,
-  } = req.body;
-
-  const updateDonation = await donationSchema.findByIdAndUpdate(
-    donationId,
-    {
-      $set: {
-        country,
-        city,
-        state,
-        bloodGroup,
-        heathissue,
-        lastDonationTime,
-        descriptionHealthCondition,
-        medicineConsumption,
-      },
-    },
-    {
-      new: true,
-    }
-  );
-  if (!updateDonation) {
-    return res.json({
-      msg: " Data  not updated",
-      status: false,
-      data: [],
-    });
-  }
-  return res.json({
-    msg: " Data Found",
-    status: true,
-    data: updateDonation,
   });
 });
 

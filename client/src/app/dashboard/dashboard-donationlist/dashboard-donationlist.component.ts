@@ -34,7 +34,11 @@ export class DashboardDonationlistComponent implements OnInit {
     this.getdonationData();
   }
   getdonationData() {
-    const headers = new HttpHeaders();
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    );
+
     this.http
       .get('http://localhost:5000/donation/filter', {
         headers,
@@ -57,7 +61,10 @@ export class DashboardDonationlistComponent implements OnInit {
       );
   }
   onRejectApprove(verified: boolean, donationId: string) {
-    const headers = new HttpHeaders();
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    );
 
     this.http
       .post(

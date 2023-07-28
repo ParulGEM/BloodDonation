@@ -46,9 +46,11 @@ export class LoginComponent {
         if (response.status) {
           this.bloodDonationServiceData.saveUserData(response.data);
           this.bloodDonationServiceData.isLogin = true;
+
           localStorage.setItem('userEmail', this.email?.value || 'NA');
           localStorage.setItem('userPassword', this.password?.value || 'NA');
 
+          this.bloodDonationServiceData.jwtToken = response.jwtToken;
           console.log('----> userData', this.bloodDonationServiceData.userData);
 
           this.bloodDonationServiceData.showAlert(
@@ -58,7 +60,7 @@ export class LoginComponent {
           if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
             this.router.navigate(['/dashboard/']);
           } else {
-            this.router.navigate(['/']);
+            this.router.navigate(['/search']);
           }
         } else {
           this.bloodDonationServiceData.showAlert(
@@ -74,5 +76,4 @@ export class LoginComponent {
       }
     }
   }
-  
 }

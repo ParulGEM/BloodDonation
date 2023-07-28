@@ -8,7 +8,6 @@ import { BloodDonationService } from '../service/blood-donation.service';
   styleUrls: ['./my-component.component.css'],
 })
 export class MyComponentComponent implements OnInit {
-
   myDonationData: any = [];
   bloodDonationServiceData: any;
   constructor(
@@ -19,11 +18,16 @@ export class MyComponentComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.bloodDonationServiceData.userData.userId) {
+      const headers = new HttpHeaders().set(
+        'Authorization',
+        `Bearer ${this.bloodDonationServiceData.jwtToken}`
+      );
       this.http
         .get('http://localhost:5000/donation/my-donation', {
           params: {
             userId: this.bloodDonationServiceData.userData.userId,
           },
+          headers,
         })
         .subscribe(
           (response: any) => {

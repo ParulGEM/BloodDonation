@@ -28,25 +28,34 @@ export class DashboardUserlistComponent {
     this.bloodDonationServiceData = bloodDonationService;
   }
   updatelist(): void {
-    this.http.get('http://localhost:5000/dashboard/user').subscribe(
-      (response: any) => {
-        if (response.status) {
-          this.dashboardData.userList = response.data;
-          this.bloodDonationServiceData.showAlert('success', response.msg);
-        } else {
-          this.bloodDonationServiceData.showAlert('error', response.msg);
-        }
-      },
-      (error) => {
-        this.bloodDonationServiceData.showAlert(
-          'error',
-          'internal server Error'
-        );
-      }
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
     );
+    this.http
+      .get('http://localhost:5000/dashboard/user', { headers })
+      .subscribe(
+        (response: any) => {
+          if (response.status) {
+            this.dashboardData.userList = response.data;
+            this.bloodDonationServiceData.showAlert('success', response.msg);
+          } else {
+            this.bloodDonationServiceData.showAlert('error', response.msg);
+          }
+        },
+        (error) => {
+          this.bloodDonationServiceData.showAlert(
+            'error',
+            'internal server Error'
+          );
+        }
+      );
   }
   onRejectApprove(verified: boolean, email: string) {
-    const headers = new HttpHeaders();
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    );
     const body = { verified, email };
     console.log('===> body', body);
     this.http

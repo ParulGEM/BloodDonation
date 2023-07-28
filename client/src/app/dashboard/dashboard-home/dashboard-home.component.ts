@@ -19,6 +19,10 @@ export class DashboardHomeComponent implements OnInit {
     this.bloodDonationServiceData = bloodDonation;
   }
   ngOnInit(): void {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    );
     this.http.get('http://localhost:5000/dashboard/user').subscribe(
       (response: any) => {
         if (response) {

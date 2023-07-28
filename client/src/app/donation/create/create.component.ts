@@ -102,11 +102,14 @@ export class CreateComponent implements OnInit {
 
   get AvailableTime() {
     return this.donationForm.get('AvailableTime');
-  } 
+  }
   async onSubmit(event: Event) {
     event.preventDefault();
     if (this.donationForm.valid) {
-      const headers = new HttpHeaders();
+      const headers = new HttpHeaders().set(
+        'Authorization',
+        `Bearer ${this.bloodDonationServiceData.jwtToken}`
+      );
 
       const response: any = await this.http
         .post(

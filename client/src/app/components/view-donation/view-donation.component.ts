@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './view-donation.component.html',
   styleUrls: ['./view-donation.component.css'],
 })
-export class ViewDonationComponent {
+export class ViewDonationComponent implements OnInit {
   displayedColumns: string[] = [
     'country',
     'city',
@@ -29,41 +29,39 @@ export class ViewDonationComponent {
     this.bloodDonationServiceData = bloodDonation;
     console.log('donationArry-->', this.bloodDonationServiceData.donationArray);
   }
+  ngOnInit(): void {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    );
 
+    this.http
+      .get('http://localhost:5000/donation/filter', { headers })
+      .subscribe(
+        (response: any) => {
+          if (response) {
+            if (response.status) {
+              this.bloodDonationServiceData.donationArray = response.data;
+            } else {
+              this.bloodDonationServiceData.showAlert('error', response.msg);
+            }
+          } else {
+            this.bloodDonationServiceData.showAlert(
+              'error',
+              'internal server error'
+            );
+          }
+        },
+        (error) => {
+          console.log(error);
+          this.bloodDonationServiceData.showAlert(
+            'error',
+            'An error occurred.'
+          );
+        }
+      );
+  }
   addDonation(donation: any) {
     this.router.navigate(['details', donation._id]);
-    // const recipienter = this.bloodDonationServiceData.userData.userId;
-    // if (!recipienter) {
-    //   this.bloodDonationServiceData.showAlert('error', 'Login First');
-    //   this.router.navigate(['user/login']);
-    //   return;
-    // }
-
-    // const headers = new HttpHeaders();
-    // this.http
-    //   .post(
-    //     'http://localhost:5000/donation/request',
-    //     { recipienter, donationId: donation._id },
-    //     { headers }
-    //   )
-    //   .subscribe(
-    //     (response: any) => {
-    //       if (response) {
-    //         if (response.status) {
-    //           this.bloodDonationServiceData.showAlert('success', response.msg);
-    //         } else {
-    //           this.bloodDonationServiceData.showAlert('error', response.msg);
-    //         }
-    //       } else {
-    //         this.bloodDonationServiceData.showAlert(
-    //           'error',
-    //           'internal server error'
-    //         );
-    //       }
-    //     },
-    //     (error) => {
-    //       console.error(error);
-    //     }
-    //   );
   }
 }

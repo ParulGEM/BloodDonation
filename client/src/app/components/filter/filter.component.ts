@@ -35,8 +35,17 @@ export class FilterComponent {
     const paramsState = new HttpParams().set('key', 'state');
     const paramscity = new HttpParams().set('key', 'city');
     const paramsCountry = new HttpParams().set('key', 'country');
+
+    console.log('tokennn---->>>', this.bloodDonationService.jwtToken);
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationService.jwtToken}`
+    );
     this.http
-      .get('http://localhost:5000/donation/location', { params: paramsCountry })
+      .get('http://localhost:5000/donation/location', {
+        params: paramsCountry,
+        headers,
+      })
       .subscribe(
         (response: any) => {
           this.countryArry = response.data; // Assign response data to countryArry
@@ -47,7 +56,10 @@ export class FilterComponent {
         }
       );
     this.http
-      .get('http://localhost:5000/donation/location', { params: paramsState })
+      .get('http://localhost:5000/donation/location', {
+        params: paramsState,
+        headers,
+      })
       .subscribe(
         (response: any) => {
           console.log(response);
@@ -59,7 +71,10 @@ export class FilterComponent {
         }
       );
     this.http
-      .get('http://localhost:5000/donation/location', { params: paramscity })
+      .get('http://localhost:5000/donation/location', {
+        params: paramscity,
+        headers,
+      })
       .subscribe(
         (response: any) => {
           this.cityarry = response.data; // Assign response data to countryArry
@@ -95,12 +110,15 @@ export class FilterComponent {
       //params.bloodGroup=bloodGroupValue
       params['bloodGroup'] = bloodGroupValue;
     }
-
-
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationService.jwtToken}`
+    );
     // const headers = new HttpHeaders()
     this.http
       .get('http://localhost:5000/donation/filter', {
         params,
+        headers,
       })
       .subscribe(
         (response: any) => {

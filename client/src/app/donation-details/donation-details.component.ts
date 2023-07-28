@@ -26,7 +26,10 @@ export class DonationDetailsComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.donationId = params.get('id') || '';
     });
-    const headers = new HttpHeaders();
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    );
 
     const params = new HttpParams().set('donationId', this.donationId);
     this.http
@@ -65,7 +68,10 @@ export class DonationDetailsComponent implements OnInit {
       return;
     }
 
-    const headers = new HttpHeaders();
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    );
     this.http
       .post(
         'http://localhost:5000/donation/request',
