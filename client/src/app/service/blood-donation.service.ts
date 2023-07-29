@@ -14,6 +14,7 @@ export class BloodDonationService {
 
   jwtToken: String = '';
   isLogin: boolean = false;
+  
   loginBydeafault = async () => {
     const userEmail = localStorage.getItem('userEmail');
     const userPassword = localStorage.getItem('userPassword');
@@ -54,6 +55,9 @@ export class BloodDonationService {
   };
 
   userData: any = {};
+  refreshUserData() {
+    this.userData = {};
+  }
   saveUserData(data: any) {
     this.userData = {
       name: data.name,
@@ -71,6 +75,7 @@ export class BloodDonationService {
   donationArray: [] = [];
 
   showAlert(type: string, msg: string) {
+    console.log('msg', msg);
     this.show(`📩 📩 ${msg}`);
     return;
   }

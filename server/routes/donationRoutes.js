@@ -11,36 +11,6 @@ import serverError from "../helpers/serverError.js";
 
 router.post("/create", async (req, res, next) => {
   try {
-    // const {
-    //   createdBy,
-
-    //   bloodGroup,
-    //   heathissue,
-    //   lastDonationTime,
-    //   descriptionHealthCondition,
-    //   medicineConsumption,
-    // } = req.body;
-    // const bodyValidation = Joi.object({
-    //   createdBy: Joi.string(),
-    //   country: Joi.string(),
-    //   city: Joi.string(),
-    //   state: Joi.string(),
-    //   bloodGroup: Joi.string().required(),
-    //   heathissue: Joi.string().required(),
-    //   lastDonationTime: Joi.string().required(),
-    //   descriptionHealthCondition: Joi.string().required(),
-    //   medicineConsumption: Joi.string().required(),
-    // });
-    // const result = bodyValidation.validate(req.body);
-    // if (result.error) {
-    //   console.log(result.error.details);
-    //   return res.json({
-    //     msg: `${result.error.details}`,
-    //     status: false,
-    //     data: {},
-    //   });
-    // }
-
     const {
       bloodGroup, //direct
       healthIssue, //direct
@@ -88,22 +58,22 @@ router.post("/create", async (req, res, next) => {
       AvailableTime,
     } = req.body;
 
-    const donationSchema = Joi.object({
+    const bodyValidation = Joi.object({
       bloodGroup: Joi.string()
         .valid("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
         .required(),
-      healthIssue: Joi.string().valid("yes", "no").required(),
-      lastDonationTime: Joi.date().iso().required(),
-      descriptionHealthCondition: Joi.string().required(),
-      medicineConsumption: Joi.string().required(),
-      birthDate: Joi.date().iso().required(),
+      healthIssue: Joi.string().valid("yes", "no"),
+      lastDonationTime: Joi.string().allow(""),
+      descriptionHealthCondition: Joi.string(),
+      medicineConsumption: Joi.string(),
+      birthDate: Joi.string(),
       gender: Joi.string().valid("male", "female", "other").required(),
       occupation: Joi.string().required(),
-      centerColonyVillage: Joi.string().required(),
-      weight: Joi.number().positive().required(),
-      pulse: Joi.number().positive().required(),
-      hb: Joi.number().positive().required(),
-      bp: Joi.string().required(),
+      centerColonyVillage: Joi.string(),
+      weight: Joi.number().positive(),
+      pulse: Joi.number().positive(),
+      hb: Joi.number().positive(),
+      bp: Joi.string(),
       temperature: Joi.string().required(),
       tattooing: Joi.boolean().required(),
       earPiercing: Joi.boolean().required(),
@@ -137,14 +107,10 @@ router.post("/create", async (req, res, next) => {
       createdBy: Joi.string().required(),
     });
 
-    const validationResult = donationSchema.validate(req.body);
-
-    if (validationResult.error) {
-      const errorMessage = validationResult.error.details
-        .map((detail) => detail.message)
-        .join(", ");
-      console.error("Validation Error:", errorMessage);
-      return next(new serverError(errorMessage, 500));
+    const result = bodyValidation.validate(req.body);
+    if (result.error) {
+      console.log(result.error.details);
+      return next(new serverError(result.error.message, 404));
     }
 
     let AvailableDateNTime = `On ${AvailableDate} at  ${AvailableTime}`;
@@ -179,9 +145,11 @@ router.post("/create", async (req, res, next) => {
     }${surgeryHistoryBloodTransfusion ? "Blood Transfusion  " : ""}`;
 
     const findUser = await userSchema.findById(createdBy);
-    if (!findUser) return next(new serverError("inValid user", 409));
-    if (!findUser.verified)
-      return next(new serverError("user not verified", 409));
+    console.log("----<<< createdBy", createdBy, "\nfindUser", findUser);
+
+    if (!findUser) return next(new serverError("inValid user"));
+
+    if (!findUser.verified) return next(new serverError("user not verified"));
     const donationCreate = await donationSchema.create({
       createdBy,
       country: findUser.country.toUpperCase(),
@@ -366,7 +334,7 @@ router.get("/details", async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return next(new serverError("Internal Server ERror", 500));
+    return next(new serverError("Internal Server Error", 500));
   }
 });
 
@@ -389,7 +357,8 @@ router.get("/my-donation", async (req, res, next) => {
       .populate("createdBy recipienter")
       .lean();
 
-    if (!findDonation) return next(new serverError("No Data Found", 500));
+    if (!findDonation.length === 0)
+      return next(new serverError("No Data Found", 500));
 
     return res.json({
       msg: " Data Found",

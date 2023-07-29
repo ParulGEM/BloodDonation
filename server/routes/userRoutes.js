@@ -14,6 +14,7 @@ const secretKey = "DONATION";
 
 const saltKey = 10;
 
+//API for register
 router.post("/create", async (req, res, next) => {
   const { email, city, state, country, phone, name, password } = req.body;
   const bodyValidation = Joi.object({
@@ -25,6 +26,7 @@ router.post("/create", async (req, res, next) => {
     name: Joi.string().required(),
     password: Joi.string().required(),
   });
+
   const result = bodyValidation.validate(req.body);
   if (result.error) {
     console.log(result.error.details);
@@ -61,6 +63,7 @@ router.post("/create", async (req, res, next) => {
   });
 });
 
+//API for login
 router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   const bodyValidation = Joi.object({
@@ -72,6 +75,7 @@ router.post("/login", async (req, res, next) => {
     console.log(result.error.details);
     return next(new serverError(result.error.message, 409));
   }
+  
   const findUser = await userSchema.findOne({ email });
   if (!findUser) return next(new serverError("Invalid Email", 404));
   const isValidpassword = await bcrypt.compare(password, findUser.password);
@@ -92,4 +96,5 @@ router.post("/login", async (req, res, next) => {
     jwtToken,
   });
 });
+
 export default router;

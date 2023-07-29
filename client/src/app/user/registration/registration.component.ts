@@ -61,98 +61,50 @@ export class RegistrationComponent {
   get state() {
     return this.registerForm.get('state');
   }
-  async onSubmit(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
     const headers = new HttpHeaders();
-    try {
-      if (this.registerForm.valid) {
-        const response: any = await this.http
-          .post('http://localhost:5000/user/create', this.registerForm.value, {
-            headers,
-          })
-          .toPromise();
-        if (response) {
-          if (response.status) {
-            this.bloodDonationServiceData.saveUserData(response.data);
-            this.bloodDonationServiceData.showAlert(
-              'success',
-              `success :${response.msg}`
-            );
 
-            if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
-              this.router.navigate(['/dashboard/']);
+    if (this.registerForm.valid) {
+      this.http
+        .post('http://localhost:5000/user/create', this.registerForm.value, {
+          headers,
+        })
+        .subscribe(
+          (response: any) => {
+            console.log('RESPONSE ==>', response);
+
+            if (response.status) {
+              console.log(response);
+              this.bloodDonationServiceData.saveUserData(response.data);
+              this.bloodDonationServiceData.showAlert(
+                'success',
+                `success :${response.msg}`
+              );
+
+              if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
+                this.router.navigate(['/dashboard/']);
+              } else {
+                this.router.navigate(['/']);
+              }
             } else {
-              this.router.navigate(['/']);
+              console.log('...>>>', response);
+              this.bloodDonationServiceData.showAlert(
+                'error',
+                `error :${response.msg}`
+              );
             }
-            this.router.navigate(['/']);
-          } else {
+          },
+          (error: any) => {
+            console.log('===>', error);
             this.bloodDonationServiceData.showAlert(
               'error',
-              `error :${response.msg}`
+              `${error.error.msg}`
             );
           }
-        } else {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            `error :internal Server Error`
-          );
-        }
-      }
-      
-      // else {
-      //   if (this.name?.invalid) {
-      //     this.bloodDonationServiceData.showAlert(
-      //       'error',
-      //       'ERROR :  Name is Invalid'
-      //     );
-      //     return;
-      //   }
-      //   if (this.email?.invalid) {
-      //     this.bloodDonationServiceData.showAlert(
-      //       'error',
-      //       'ERROR :  Email is Invalid'
-      //     );
-      //     return;
-      //   }
-      //   if (this.phone?.invalid) {
-      //     this.bloodDonationServiceData.showAlert(
-      //       'error',
-      //       'ERROR :  Phone is Invalid'
-      //     );
-      //     return;
-      //   }
-      //   if (this.password?.invalid) {
-      //     this.bloodDonationServiceData.showAlert(
-      //       'error',
-      //       'ERROR :  password is Invalid'
-      //     );
-      //     return;
-      //   }
-      //   if (this.city?.invalid) {
-      //     this.bloodDonationServiceData.showAlert(
-      //       'error',
-      //       'ERROR :  city is Invalid'
-      //     );
-      //     return;
-      //   }
-      //   if (this.state?.invalid) {
-      //     this.bloodDonationServiceData.showAlert(
-      //       'error',
-      //       'ERROR :  state is Invalid'
-      //     );
-      //     return;
-      //   }
-      //   if (this.country?.invalid) {
-      //     this.bloodDonationServiceData.showAlert(
-      //       'error',
-      //       'ERROR :  country is Invalid'
-      //     );
-      //     return;
-      //   }
-      //   this.bloodDonationServiceData.showAlert('Error', 'Invalid form ');
-      // }
-    } catch (error) {
-      this.bloodDonationServiceData.showAlert('Error', error);
+        );
+    } else {
+      this.bloodDonationServiceData.showAlert('Error', 'Invalid form');
     }
   }
 }

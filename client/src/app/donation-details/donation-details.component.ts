@@ -95,6 +95,9 @@ export class DonationDetailsComponent implements OnInit {
         },
         (error) => {
           console.error(error);
+          this.bloodDonationServiceData.showAlert('error', error.error?.msg);
+          console.log("first")
+          console.log(error.parul?.msg);
         }
       );
   }

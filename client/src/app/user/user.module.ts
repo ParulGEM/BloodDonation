@@ -5,8 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -15,13 +13,12 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatButtonModule,
-    MatInputModule,
+
     RouterModule,
     // RouterModule.forRoot(routes),
   ],
   exports: [RegistrationComponent, LoginComponent],
 })
 export class UserModule {
-  
+
 }

@@ -21,6 +21,7 @@ export class NavbarComponent {
     localStorage.removeItem('userPassword');
 
     this.bloodDonationdata.isLogin = false;
+    this.bloodDonationdata.refreshUserData();
     this.router.navigateByUrl('/');
   }
 }

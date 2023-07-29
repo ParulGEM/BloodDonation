@@ -33,47 +33,66 @@ export class LoginComponent {
   get email() {
     return this.loginForm.get('email');
   }
-  async onSubmit(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
+
     if (this.loginForm.valid) {
       const headers = new HttpHeaders();
-      const response: any = await this.http
+      //sent data to server through api
+      this.http
         .post('http://localhost:5000/user/login', this.loginForm.value, {
+
           headers,
         })
-        .toPromise();
-      if (response) {
-        if (response.status) {
-          this.bloodDonationServiceData.saveUserData(response.data);
-          this.bloodDonationServiceData.isLogin = true;
+        .subscribe(
+          (response: any) => {
+            if (response) {
+              if (response.status) {
+                this.bloodDonationServiceData.saveUserData(response.data);
+                this.bloodDonationServiceData.isLogin = true;
 
-          localStorage.setItem('userEmail', this.email?.value || 'NA');
-          localStorage.setItem('userPassword', this.password?.value || 'NA');
+                //setting in local storage
+                localStorage.setItem('userEmail', this.email?.value || 'NA');
+                localStorage.setItem(
+                  'userPassword',
+                  this.password?.value || 'NA'
+                );
 
-          this.bloodDonationServiceData.jwtToken = response.jwtToken;
-          console.log('----> userData', this.bloodDonationServiceData.userData);
+                this.bloodDonationServiceData.jwtToken = response.jwtToken;//saved jwt token
 
-          this.bloodDonationServiceData.showAlert(
-            'success',
-            `success :${response.msg}`
-          );
-          if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
-            this.router.navigate(['/dashboard/']);
-          } else {
-            this.router.navigate(['/search']);
+                console.log(
+                  '----> userData',
+                  this.bloodDonationServiceData.userData
+                );
+
+                this.bloodDonationServiceData.showAlert(
+                  'success',
+                  `success :${response.msg}`
+                );
+                if (
+                  this.bloodDonationServiceData.userData.userType === 'ADMIN'
+                ) {
+                  this.router.navigate(['/dashboard/']);
+                } else {
+                  this.router.navigate(['/search']);
+                }
+              } else {
+                this.bloodDonationServiceData.showAlert(
+                  'error',
+                  `error :${response.msg}`
+                );
+              }
+            } else {
+              this.bloodDonationServiceData.showAlert(
+                'error',
+                `error :Internal Server Error`
+              );
+            }
+          },
+          (error) => {
+            this.bloodDonationServiceData.showAlert('error', error.error?.msg);
           }
-        } else {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            `error :${response.msg}`
-          );
-        }
-      } else {
-        this.bloodDonationServiceData.showAlert(
-          'error',
-          `error :internal Server Error`
         );
-      }
     }
   }
 }

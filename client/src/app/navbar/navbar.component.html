@@ -82,15 +82,16 @@
               <span class="badge badge-danger"></span>
             </i>
           </li>
-          <li *ngIf="bloodDonationdata.isLogin" class="nav-item m-2">
+          <li *ngIf="bloodDonationdata.isLogin" class="nav-item m-1">
             <button
               style="height: 30px"
-              class="btn btn-danger"
+              class="btn btn-danger d-flex align-items-center"
               (click)="logout()"
             >
               Logout
             </button>
           </li>
+          
         </ng-container>
       </ul>
     </div>

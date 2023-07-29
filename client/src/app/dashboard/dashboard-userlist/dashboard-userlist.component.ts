@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DashboardDonationService } from '../service/dashboard-donation.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
@@ -7,7 +7,7 @@ import { BloodDonationService } from 'src/app/service/blood-donation.service';
   templateUrl: './dashboard-userlist.component.html',
   styleUrls: ['./dashboard-userlist.component.css'],
 })
-export class DashboardUserlistComponent {
+export class DashboardUserlistComponent implements OnInit {
   displayedColumns: string[] = [
     'email',
     'phone',
@@ -27,11 +27,18 @@ export class DashboardUserlistComponent {
     this.dashboardData = dashboardDataservice;
     this.bloodDonationServiceData = bloodDonationService;
   }
+  ngOnInit(): void {
+    this.updatelist();
+  }
+
   updatelist(): void {
     const headers = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.bloodDonationServiceData.jwtToken}`
     );
+
+
+    console.log( `Bearer ${this.bloodDonationServiceData.jwtToken}`)
     this.http
       .get('http://localhost:5000/dashboard/user', { headers })
       .subscribe(

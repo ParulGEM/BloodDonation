@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -15,7 +15,8 @@ export class CreateComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private bloodDonationService: BloodDonationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.bloodDonationServiceData = bloodDonationService;
   }
@@ -103,7 +104,7 @@ export class CreateComponent implements OnInit {
   get AvailableTime() {
     return this.donationForm.get('AvailableTime');
   }
-  async onSubmit(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
     if (this.donationForm.valid) {
       const headers = new HttpHeaders().set(
@@ -111,7 +112,7 @@ export class CreateComponent implements OnInit {
         `Bearer ${this.bloodDonationServiceData.jwtToken}`
       );
 
-      const response: any = await this.http
+      this.http
         .post(
           'http://localhost:5000/donation/create',
           {
@@ -122,28 +123,39 @@ export class CreateComponent implements OnInit {
             headers,
           }
         )
-        .toPromise();
-      if (response) {
-        if (response.status) {
-          this.bloodDonationServiceData.saveUserData(response.data);
-          this.bloodDonationServiceData.showAlert(
-            'success',
-            `success :${response.msg}`
-          );
-        } else {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            `error :${response.msg}`
-          );
-        }
-      } else {
-        this.bloodDonationServiceData.showAlert(
-          'error',
-          `error :internal Server Error`
+        .subscribe(
+          (response: any) => {
+            if (response) {
+              if (response.status) {
+                this.bloodDonationServiceData.saveUserData(response.data);
+                this.bloodDonationServiceData.showAlert(
+                  'success',
+                  `success :${response.msg}`
+                );
+                this.router.navigate(['/search/']);
+              } else {
+                this.bloodDonationServiceData.showAlert(
+                  'error',
+                  `error :${response.msg}`
+                );
+              }
+            } else {
+              this.bloodDonationServiceData.showAlert(
+                'error',
+                `error :internal Server Error`
+              );
+            }
+          },
+          (error: any) => {
+            this.bloodDonationServiceData.showAlert(
+              'error',
+              `error :${error.error?.msg}`
+            );
+          }
         );
-      }
-    } else {
-      alert('Not there');
+    }
+    else {
+      this.donationForm.markAllAsTouched();
     }
   }
 }

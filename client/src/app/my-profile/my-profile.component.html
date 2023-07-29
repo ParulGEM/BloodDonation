@@ -1,25 +1,24 @@
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-6 offset-md-3 mt-5">
-      <h1 class="profile-title">Profile Picture</h1>
-      <mat-card class="profile-card">
-        <div class="card-content">
-          <div class="image-container">
-            <img src="assets\146035.png" style="height: 25%; width: 25%;" alt="Profile Picture" class="profile-picture " />
+<div class="container maindiv">
+  <div class="row justify-content-center ">
+    <div class="col-md-6">
+      <div class="card profile-card">
+        <div class="card-body">
+          <div class="profile-picture-container text-center">
+            <img src="assets/146035.png" alt="Profile Picture" class="profile-picture img-fluid" />
           </div>
-          <div class="text-container">
-            <h5 class="profile-name">{{ userData.name }}</h5>
-            <p class="profile-text">Email: {{ userData.email }}</p>
-            <p class="profile-text">Phone: {{ userData.phone }}</p>
-            <p class="profile-text">User ID: {{ userData.userId }}</p>
-            <p class="profile-text">City: {{ userData.city }}</p>
-            <p class="profile-text">Country: {{ userData.country }}</p>
-            <p class="profile-text">State: {{ userData.state }}</p>
-            <p class="profile-text">User Type: {{ userData.userType }}</p>
-            <p class="profile-text">Verified: {{ userData.verified }}</p>
+          <div class="text-center mt-4">
+            <h3 class="profile-name">{{ userData.name }}</h3>
+            <p class="profile-info">Email: {{ userData.email }}</p>
+            <p class="profile-info">Phone: {{ userData.phone }}</p>
+            <p class="profile-info">User ID: {{ userData.userId }}</p>
+            <p class="profile-info">City: {{ userData.city }}</p>
+            <p class="profile-info">Country: {{ userData.country }}</p>
+            <p class="profile-info">State: {{ userData.state }}</p>
+            <p class="profile-info">User Type: {{ userData.userType }}</p>
+            <p class="profile-info">Verified: {{ userData.verified }}</p>
           </div>
         </div>
-      </mat-card>
+      </div>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/dashboard">Dashboard</a>
 
@@ -20,13 +20,20 @@
             >DonationList</a
           >
         </li>
-
         <li class="nav-item">
           <a class="nav-link" routerLink="/dashboard/donation-request"
             >Donation Request</a
           >
         </li>
       </ul>
+
+      <button
+        style="height: 30px"
+        class="btn btn-danger d-flex align-items-center"
+        (click)="logout()"
+      >
+        Logout
+      </button>
     </div>
   </div>
 </nav>

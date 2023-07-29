@@ -27,16 +27,21 @@
         </select>
 
         <span
-        [ngStyle]="{ color: 'red' }"
-        *ngIf="bloodGroup && bloodGroup.invalid && bloodGroup.touched"
-        >*Select a blood group</span
-      >
+          [ngStyle]="{ color: 'red' }"
+          *ngIf="bloodGroup && bloodGroup.invalid && bloodGroup.touched"
+          >*Select a blood group</span
+        >
       </div>
 
       <div class="form-group">
         <div class="row">
           <div class="col-md-6">
             <label>Gender:</label>
+            <span
+              [ngStyle]="{ color: 'red' }"
+              *ngIf="gender && gender.invalid && gender.touched"
+              >*Select Gender</span
+            >
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -45,11 +50,7 @@
                 value="male"
                 required
               />
-              <span
-              [ngStyle]="{ color: 'red' }"
-              *ngIf="gender && gender.invalid && gender.touched"
-              >*Select Gender</span
-            >
+
               <label class="form-check-label">Male</label>
             </div>
             <div class="form-check">
@@ -72,11 +73,15 @@
               />
               <label class="form-check-label">Other</label>
             </div>
-
           </div>
 
           <div class="col-md-6">
             <label>Have you donated previously? </label>
+            <span
+              [ngStyle]="{ color: 'red' }"
+              *ngIf="healthIssue && healthIssue.invalid && healthIssue.touched"
+              >*Choose One</span
+            >
             <div class="form-check">
               <input
                 class="form-check-input"
@@ -134,10 +139,10 @@
           required
         />
         <span
-        [ngStyle]="{ color: 'red' }"
-        *ngIf="birthDate && birthDate.invalid && birthDate.touched"
-        >*Select your DOB</span
-      >
+          [ngStyle]="{ color: 'red' }"
+          *ngIf="birthDate && birthDate.invalid && birthDate.touched"
+          >*Select your DOB</span
+        >
       </div>
 
       <div class="form-group">
@@ -149,10 +154,10 @@
           required
         />
         <span
-        [ngStyle]="{ color: 'red' }"
-        *ngIf="occupation && occupation.invalid && occupation.touched"
-        >*Enter your occupation</span
-      >
+          [ngStyle]="{ color: 'red' }"
+          *ngIf="occupation && occupation.invalid && occupation.touched"
+          >*Enter your occupation</span
+        >
       </div>
 
       <div class="form-group">
@@ -165,10 +170,14 @@
         />
 
         <span
-        [ngStyle]="{ color: 'red' }"
-        *ngIf="centerColonyVillage && centerColonyVillage.invalid && centerColonyVillage.touched"
-        >*Enter your Address/Colony/Village</span
-      >
+          [ngStyle]="{ color: 'red' }"
+          *ngIf="
+            centerColonyVillage &&
+            centerColonyVillage.invalid &&
+            centerColonyVillage.touched
+          "
+          >*Enter your Address/Colony/Village</span
+        >
       </div>
 
       <div class="form-group">
@@ -179,17 +188,11 @@
               class="form-control"
               type="number"
               formControlName="weight"
-
             />
           </div>
           <div class="col-md-6">
             <label>Pulse</label>
-            <input
-              class="form-control"
-              type="number"
-              formControlName="pulse"
-
-            />
+            <input class="form-control" type="number" formControlName="pulse" />
           </div>
         </div>
       </div>
@@ -198,33 +201,18 @@
         <div class="row">
           <div class="col-md-6">
             <label>Haemoglobin</label>
-            <input
-              class="form-control"
-              type="number"
-              formControlName="hb"
-
-            />
+            <input class="form-control" type="number" formControlName="hb" />
           </div>
           <div class="col-md-6">
             <label>Blood Pressure</label>
-            <input
-              class="form-control"
-              type="text"
-              formControlName="bp"
-
-            />
+            <input class="form-control" type="text" formControlName="bp" />
           </div>
         </div>
       </div>
 
       <div class="form-group">
         <label>Temperature</label>
-        <input
-          class="form-control"
-          type="text"
-          formControlName="temperature"
-
-        />
+        <input class="form-control" type="text" formControlName="temperature" />
       </div>
 
       <div class="form-group">
@@ -259,58 +247,184 @@
         <label class="checkbox-group-label"
           >Do you have or had any of these diseases?</label
         >
-        <mat-checkbox formControlName="heartDisease"
-          >Heart Disease</mat-checkbox
-        >
-        <mat-checkbox formControlName="cancer"
-          >Cancer/Malignant Disease</mat-checkbox
-        >
-        <mat-checkbox formControlName="diabetes">Diabetes</mat-checkbox>
-        <mat-checkbox formControlName="hepatitisBC">Hepatitis B/C</mat-checkbox>
-        <mat-checkbox formControlName="std"
-          >Sexually Transmitted Diseases</mat-checkbox
-        >
-        <mat-checkbox formControlName="typhoid"
-          >Typhoid (last one year)</mat-checkbox
-        >
-        <mat-checkbox formControlName="lungDisease">Lung Disease</mat-checkbox>
-        <mat-checkbox formControlName="tuberculosis">Tuberculosis</mat-checkbox>
-        <mat-checkbox formControlName="allergicDisease"
-          >Allergic Disease</mat-checkbox
-        >
-        <mat-checkbox formControlName="kidneyDisease"
-          >Kidney Disease</mat-checkbox
-        >
-        <mat-checkbox formControlName="epilepsy"
-          >Epilepsy (Charay rog)</mat-checkbox
-        >
-        <mat-checkbox formControlName="malaria"
-          >Malaria (six months)</mat-checkbox
-        >
-        <mat-checkbox formControlName="bleedingTendency"
-          >Abnormal Bleeding Tendency</mat-checkbox
-        >
-        <mat-checkbox formControlName="jaundice"
-          >Jaundice (last one year)</mat-checkbox
-        >
-        <mat-checkbox formControlName="faintingSpells"
-          >Fainting Spells</mat-checkbox
-        >
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="heartDisease"
+          />
+          <label class="form-check-label">Heart Disease</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="cancer"
+          />
+          <label class="form-check-label">Cancer/Malignant Disease</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="diabetes"
+          />
+          <label class="form-check-label">Diabetes</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="hepatitisBC"
+          />
+          <label class="form-check-label">Hepatitis B/C</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="std"
+          />
+          <label class="form-check-label">Sexually Transmitted Diseases</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="typhoid"
+          />
+          <label class="form-check-label">Typhoid (last one year)</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="lungDisease"
+          />
+          <label class="form-check-label">Lung Disease</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="tuberculosis"
+          />
+          <label class="form-check-label">Tuberculosis</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="allergicDisease"
+          />
+          <label class="form-check-label">Allergic Disease</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="kidneyDisease"
+          />
+          <label class="form-check-label">Kidney Disease</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="epilepsy"
+          />
+          <label class="form-check-label">Epilepsy (Charay rog)</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="malaria"
+          />
+          <label class="form-check-label">Malaria (six months)</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="bleedingTendency"
+          />
+          <label class="form-check-label">Abnormal Bleeding Tendency</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="jaundice"
+          />
+          <label class="form-check-label">Jaundice (last one year)</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="faintingSpells"
+          />
+          <label class="form-check-label">Fainting Spells</label>
+        </div>
       </div>
 
       <div class="form-group">
         <label class="checkbox-group-label"
           >Have you taken any of these in the last 72 hours?</label
         >
-        <mat-checkbox formControlName="antibiotics">Antibiotics</mat-checkbox>
-        <mat-checkbox formControlName="steroids">Steroids</mat-checkbox>
-        <mat-checkbox formControlName="aspirin">Aspirin</mat-checkbox>
-        <mat-checkbox formControlName="vaccinations">Vaccinations</mat-checkbox>
-        <mat-checkbox formControlName="alcohol">Alcohol</mat-checkbox>
-        <mat-checkbox formControlName="dogBiteRabiesVaccine"
-          >Dog Bite Rabies Vaccine (1 year)</mat-checkbox
-        >
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="antibiotics"
+          />
+          <label class="form-check-label">Antibiotics</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="steroids"
+          />
+          <label class="form-check-label">Steroids</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="aspirin"
+          />
+          <label class="form-check-label">Aspirin</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="vaccinations"
+          />
+          <label class="form-check-label">Vaccinations</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="alcohol"
+          />
+          <label class="form-check-label">Alcohol</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="dogBiteRabiesVaccine"
+          />
+          <label class="form-check-label"
+            >Dog Bite Rabies Vaccine (1 year)</label
+          >
+        </div>
       </div>
+
       <div class="form-group">
         <label>Any surgery or blood transfusion in the last six months?</label>
         <div class="form-check">
@@ -349,10 +463,12 @@
         />
 
         <span
-        [ngStyle]="{ color: 'red' }"
-        *ngIf="AvailableDate && AvailableDate.invalid && AvailableDate.touched"
-        >*Enter the availability date</span
-      >
+          [ngStyle]="{ color: 'red' }"
+          *ngIf="
+            AvailableDate && AvailableDate.invalid && AvailableDate.touched
+          "
+          >*Enter the availability date</span
+        >
       </div>
       <div class="form-group">
         <label>Any Specific Time</label>
@@ -364,15 +480,18 @@
         />
 
         <span
-        [ngStyle]="{ color: 'red' }"
-        *ngIf="AvailableTime && AvailableTime.invalid && AvailableTime.touched"
-        >*Enter the availability time</span
-      >
+          [ngStyle]="{ color: 'red' }"
+          *ngIf="
+            AvailableTime && AvailableTime.invalid && AvailableTime.touched
+          "
+          >*Enter the availability time</span
+        >
       </div>
 
       <div class="form-group submit-button-container">
-        <button class="btn btn-danger" [disabled]="donationForm.invalid" type="submit">Save Details</button>
+        <button class="btn btn-danger" type="submit">Save Details</button>
       </div>
     </form>
   </div>
 </div>
+<!-- [disabled]="donationForm.invalid" -->

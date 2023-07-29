@@ -9,6 +9,7 @@ import dashboardRoutes from "./routes/dashboard.js";
 import userSchema from "./model/userModel.js";
 import donationSchema from "./model/donationModel.js";
 import authentication from "./middleware/authentication.js";
+import sendMail from "./helpers/sendMails.js";
 
 const app = express();
 app.use(express.json());
@@ -22,6 +23,12 @@ app.use(authentication);
 app.use("/donation", donationRoutes);
 app.use("/dashboard", dashboardRoutes);
 
+// app.post("/sendEmail", async (req, res) => {
+//   const mail=req.body.mail;
+//   sendMail(mail,"Sending Mail",`<h1>Hi, sending you an email</h1>`);
+//   res.send("ok");
+// });
+
 app.use((error, req, res, next) => {
   error.statusCode = error.statusCode || 500;
   return res.status(error.statusCode).json({
@@ -29,6 +36,7 @@ app.use((error, req, res, next) => {
     msg: error.message,
   });
 });
+
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });
