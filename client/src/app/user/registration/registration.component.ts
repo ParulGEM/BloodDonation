@@ -76,18 +76,19 @@ export class RegistrationComponent {
 
             if (response.status) {
               console.log(response);
-              this.bloodDonationServiceData.saveUserData(response.data);
+              // this.bloodDonationServiceData.saveUserData(response.data);
               this.bloodDonationServiceData.showAlert(
                 'success',
                 `success :${response.msg}`
               );
-
-              if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
-                this.router.navigate(['/dashboard/']);
-              } else {
-                this.router.navigate(['/']);
-              }
-            } else {
+              this.router.navigate(['/user/login']);
+              // if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
+              //   this.router.navigate(['/dashboard/']);
+              // } else {
+              //   this.router.navigate(['/']);
+              // }
+            }
+            else {
               console.log('...>>>', response);
               this.bloodDonationServiceData.showAlert(
                 'error',

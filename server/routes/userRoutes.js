@@ -32,6 +32,7 @@ router.post("/create", async (req, res, next) => {
     console.log(result.error.details);
     return next(new serverError(result.error.message, 409));
   }
+
   let { userType = "USER" } = req.body;
   if (name === "ADMIN" && password === "ADMIN@123#") {
     userType = "ADMIN";
@@ -47,7 +48,7 @@ router.post("/create", async (req, res, next) => {
     email,
     phone,
     name,
-    notification: ["Your account has been Created.."],
+    notification: ["Your Account has been Created.."],
     password: encryptedPassword,
     country: country.toUpperCase(),
     city: city.toUpperCase(),
@@ -70,16 +71,19 @@ router.post("/login", async (req, res, next) => {
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   });
+
+  //validated body
   const result = bodyValidation.validate(req.body);
   if (result.error) {
     console.log(result.error.details);
     return next(new serverError(result.error.message, 409));
   }
-  
-  const findUser = await userSchema.findOne({ email });
-  if (!findUser) return next(new serverError("Invalid Email", 404));
-  const isValidpassword = await bcrypt.compare(password, findUser.password);
 
+  const findUser = await userSchema.findOne({ email:email });
+  if (!findUser) return next(new serverError("Invalid Email", 404));//
+  const isValidpassword = await bcrypt.compare(password, findUser.password);//
+  if (!isValidpassword) return next(new serverError("Incorrect password", 409));
+  
   const User = {
     email,
     password,
@@ -87,10 +91,8 @@ router.post("/login", async (req, res, next) => {
 
   const jwtToken = jwt.sign(User, secretKey, { expiresIn: "1h" });
 
-
-  if (!isValidpassword) return next(new serverError("Incorrect password", 409));
   return res.json({
-    msg: "Login successfully",
+    msg: "Login Successfully",
     status: true,
     data: findUser,
     jwtToken,

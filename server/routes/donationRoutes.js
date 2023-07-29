@@ -63,7 +63,7 @@ router.post("/create", async (req, res, next) => {
         .valid("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
         .required(),
       healthIssue: Joi.string().valid("yes", "no"),
-      lastDonationTime: Joi.string().allow(""),
+      lastDonationTime: Joi.string().allow(""),//allowed empty string
       descriptionHealthCondition: Joi.string(),
       medicineConsumption: Joi.string(),
       birthDate: Joi.string(),
@@ -145,11 +145,12 @@ router.post("/create", async (req, res, next) => {
     }${surgeryHistoryBloodTransfusion ? "Blood Transfusion  " : ""}`;
 
     const findUser = await userSchema.findById(createdBy);
+
     console.log("----<<< createdBy", createdBy, "\nfindUser", findUser);
 
-    if (!findUser) return next(new serverError("inValid user"));
+    if (!findUser) return next(new serverError("Invalid user"));
 
-    if (!findUser.verified) return next(new serverError("user not verified"));
+    if (!findUser.verified) return next(new serverError("User not verified"));
     const donationCreate = await donationSchema.create({
       createdBy,
       country: findUser.country.toUpperCase(),
@@ -180,7 +181,7 @@ router.post("/create", async (req, res, next) => {
       return next(new serverError("Cannot save the donation", 500));
 
     await userSchema.findByIdAndUpdate(findUser._id, {
-      $push: { notification: "you created a Blood Donation" },
+      $push: { notification: "You created a Blood Donation" },
     });
 
     const htmlcode = mailsHtml.createDonation(

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
 import { Router } from '@angular/router';
 @Component({
@@ -24,52 +24,53 @@ export class CreateComponent implements OnInit {
     this.createDonationForm();
   }
   createDonationForm(): void {
-    this.donationForm = this.formBuilder.group({
-      bloodGroup: ['', Validators.required],
-      healthIssue: ['', Validators.required],
-      lastDonationTime: [''],
-      descriptionHealthCondition: [''],
-      medicineConsumption: [''],
-      birthDate: ['', Validators.required],
-      gender: ['', Validators.required],
-      occupation: ['', Validators.required],
-      centerColonyVillage: ['', Validators.required],
-      weight: [''],
-      pulse: [''],
-      hb: [''],
-      bp: [''],
-      temperature: [''],
-      tattooing: [false],
-      earPiercing: [false],
-      dentalExtraction: [false],
-      heartDisease: [false],
-      cancer: [false],
-      diabetes: [false],
-      hepatitisBC: [false],
-      std: [false],
-      typhoid: [false],
-      lungDisease: [false],
-      tuberculosis: [false],
-      allergicDisease: [false],
-      kidneyDisease: [false],
-      epilepsy: [false],
-      malaria: [false],
-      bleedingTendency: [false],
-      jaundice: [false],
-      faintingSpells: [false],
-      antibiotics: [false],
-      steroids: [false],
-      aspirin: [false],
-      vaccinations: [false],
-      alcohol: [false],
-      dogBiteRabiesVaccine: [false],
-      surgeryHistoryMinor: [false],
-      surgeryHistoryMajor: [false],
-      surgeryHistoryBloodTransfusion: [false],
-      AvailableDate: ['', Validators.required],
-      AvailableTime: ['', Validators.required],
+    this.donationForm = new FormGroup({
+      bloodGroup: new FormControl('', Validators.required),
+      healthIssue: new FormControl('', Validators.required),
+      lastDonationTime: new FormControl(''),
+      descriptionHealthCondition: new FormControl(''),
+      medicineConsumption: new FormControl(''),
+      birthDate: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.required),
+      occupation: new FormControl('', Validators.required),
+      centerColonyVillage: new FormControl('', Validators.required),
+      weight: new FormControl(''),
+      pulse: new FormControl(''),
+      hb: new FormControl(''),
+      bp: new FormControl(''),
+      temperature: new FormControl(''),
+      tattooing: new FormControl(false),
+      earPiercing: new FormControl(false),
+      dentalExtraction: new FormControl(false),
+      heartDisease: new FormControl(false),
+      cancer: new FormControl(false),
+      diabetes: new FormControl(false),
+      hepatitisBC: new FormControl(false),
+      std: new FormControl(false),
+      typhoid: new FormControl(false),
+      lungDisease: new FormControl(false),
+      tuberculosis: new FormControl(false),
+      allergicDisease: new FormControl(false),
+      kidneyDisease: new FormControl(false),
+      epilepsy: new FormControl(false),
+      malaria: new FormControl(false),
+      bleedingTendency: new FormControl(false),
+      jaundice: new FormControl(false),
+      faintingSpells: new FormControl(false),
+      antibiotics: new FormControl(false),
+      steroids: new FormControl(false),
+      aspirin: new FormControl(false),
+      vaccinations: new FormControl(false),
+      alcohol: new FormControl(false),
+      dogBiteRabiesVaccine: new FormControl(false),
+      surgeryHistoryMinor: new FormControl(false),
+      surgeryHistoryMajor: new FormControl(false),
+      surgeryHistoryBloodTransfusion: new FormControl(false),
+      AvailableDate: new FormControl('', Validators.required),
+      AvailableTime: new FormControl('', Validators.required),
     });
   }
+
   get bloodGroup() {
     return this.donationForm.get('bloodGroup');
   }
@@ -104,6 +105,7 @@ export class CreateComponent implements OnInit {
   get AvailableTime() {
     return this.donationForm.get('AvailableTime');
   }
+
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.donationForm.valid) {
@@ -127,7 +129,6 @@ export class CreateComponent implements OnInit {
           (response: any) => {
             if (response) {
               if (response.status) {
-                this.bloodDonationServiceData.saveUserData(response.data);
                 this.bloodDonationServiceData.showAlert(
                   'success',
                   `success :${response.msg}`
