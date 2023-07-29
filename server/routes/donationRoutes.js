@@ -350,14 +350,9 @@ router.get("/my-donation", async (req, res, next) => {
     return next(new serverError(result.error.message, 500));
   }
   try {
-    if (!userId) {
-      return next(new serverError("Send UserId", 500));
-    }
     const findDonation = await donationSchema
       .find({ $or: [{ recipienter: userId }, { createdBy: userId }] })
-      .populate("createdBy recipienter")
-      .lean();
-
+      .populate("createdBy recipienter");
     if (!findDonation.length === 0)
       return next(new serverError("No Data Found", 500));
 
