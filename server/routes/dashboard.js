@@ -22,6 +22,7 @@ router.get("/user", async (req, res, next) => {
     return next(new serverError("Internal Server ERror", 500));
   }
 });
+
 router.post("/approve/user", async (req, res, next) => {
   try {
     const { verified, email } = req.body;
@@ -36,7 +37,7 @@ router.post("/approve/user", async (req, res, next) => {
     }
     let msg = "";
     if (verified) {
-      msg = "Your account is verified by ADMIN";
+      msg = "Your account is VERIFIED by ADMIN";
     } else {
       msg = "Your account is REJECT by ADMIN";
     }
@@ -71,7 +72,7 @@ router.post("/approve/user", async (req, res, next) => {
 });
 
 router.post("/approve/donation", async (req, res, next) => {
-  try {
+  try { 
     const { verified, donationId } = req.body;
     const bodyValidation = Joi.object({
       donationId: Joi.string().required(),
@@ -131,6 +132,7 @@ router.post("/approve/donation", async (req, res, next) => {
     return next(new serverError("Internal Server ERror", 500));
   }
 });
+
 router.post("/approve/donation-request", async (req, res, next) => {
   try {
     const { status, donationId } = req.body;
@@ -169,4 +171,5 @@ router.post("/approve/donation-request", async (req, res, next) => {
     return next(new serverError("Internal Server Error", 500));
   }
 });
+
 export default router;

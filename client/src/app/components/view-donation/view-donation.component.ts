@@ -9,17 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./view-donation.component.css'],
 })
 export class ViewDonationComponent implements OnInit {
-  displayedColumns: string[] = [
-    'country',
-    'city',
-    'state',
-    'bloodGroup',
-    'heathissue',
-    'lastDonationTime',
-    'descriptionHealthCondition',
-    'medicineConsumption',
-    'add',
-  ];
+  
   bloodDonationServiceData: any;
   constructor(
     private router: Router,

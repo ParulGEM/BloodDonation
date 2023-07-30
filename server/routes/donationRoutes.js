@@ -222,9 +222,9 @@ router.post("/request", async (req, res, next) => {
     }
 
     const findUser = await userSchema.findById(recipienter);
-    if (!findUser) return next(new serverError("inValid user", 409));
+    if (!findUser) return next(new serverError("Invalid user", 409));
     if (!findUser.verified)
-      return next(new serverError("user not verified", 404));
+      return next(new serverError("User not verified", 404));
 
     const findDonation = await donationSchema.findOne({ _id: donationId });
     if (!findDonation) return next(new serverError("Invalid Donation Id", 409));
@@ -291,8 +291,7 @@ router.get("/filter", async (req, res, next) => {
 
     const findDonation = await donationSchema
       .find(filterQuery)
-      .populate("createdBy recipienter")
-      .lean();
+      .populate("createdBy recipienter");
 
     if (!findDonation) return next(new serverError("no Data Found", 409));
     return res.json({
@@ -324,8 +323,8 @@ router.get("/details", async (req, res, next) => {
 
     const findDonation = await donationSchema
       .findById(donationId)
-      .populate("createdBy")
-      .lean();
+      .populate("createdBy");
+ 
     if (!findDonation) return next(new serverError("No Data Found", 500));
 
     return res.json({
@@ -353,6 +352,7 @@ router.get("/my-donation", async (req, res, next) => {
     const findDonation = await donationSchema
       .find({ $or: [{ recipienter: userId }, { createdBy: userId }] })
       .populate("createdBy recipienter");
+
     if (!findDonation.length === 0)
       return next(new serverError("No Data Found", 500));
 
@@ -363,7 +363,7 @@ router.get("/my-donation", async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return next(new serverError("Internal Server ERror", 500));
+    return next(new serverError("Internal Server Error", 500));
   }
 });
 

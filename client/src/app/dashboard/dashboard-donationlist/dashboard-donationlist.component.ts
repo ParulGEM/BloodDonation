@@ -10,18 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class DashboardDonationlistComponent implements OnInit {
   bloodDonationServiceData: any;
   dashboardData: any;
-  displayedColumns: string[] = [
-    'country',
-    'city',
-    'state',
-    'bloodGroup',
-    'healthIssue',
-    'lastDonationTime',
-    'description',
-    'medicineConsumption',
-    'createdBy',
-    'actions',
-  ];
+  
   constructor(
     private bloodDonation: BloodDonationService,
     private dashboard: DashboardDonationService,

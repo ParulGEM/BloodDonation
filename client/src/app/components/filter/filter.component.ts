@@ -8,10 +8,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./filter.component.css'],
 })
 export class FilterComponent {
-  @ViewChild('countrySelect') countrySelect: any;
-  @ViewChild('citySelect') citySelect: any;
-  @ViewChild('stateSelect') stateSelect: any;
-  @ViewChild('bloodGroupSelect') bloodGroupSelect: any;
 
   countryArry = [];
   stateArry = [];
@@ -32,6 +28,7 @@ export class FilterComponent {
       state: [''],
       bloodGroup: [''],
     });
+    
     const paramsState = new HttpParams().set('key', 'state');
     const paramscity = new HttpParams().set('key', 'city');
     const paramsCountry = new HttpParams().set('key', 'country');

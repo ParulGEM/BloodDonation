@@ -62,6 +62,7 @@ export class DonationDetailsComponent implements OnInit {
   }
   addDonation() {
     const recipienter = this.bloodDonationServiceData.userData.userId;
+
     if (!recipienter) {
       this.bloodDonationServiceData.showAlert('error', 'Login First');
       this.router.navigate(['user/login']);
@@ -96,8 +97,6 @@ export class DonationDetailsComponent implements OnInit {
         (error) => {
           console.error(error);
           this.bloodDonationServiceData.showAlert('error', error.error?.msg);
-          console.log("first")
-          console.log(error.parul?.msg);
         }
       );
   }

@@ -8,15 +8,6 @@ import { BloodDonationService } from 'src/app/service/blood-donation.service';
   styleUrls: ['./dashboard-userlist.component.css'],
 })
 export class DashboardUserlistComponent implements OnInit {
-  displayedColumns: string[] = [
-    'email',
-    'phone',
-    'name',
-    'city',
-    'state',
-    'country',
-    'actions',
-  ];
   dashboardData: any;
   bloodDonationServiceData: any;
   constructor(
@@ -81,7 +72,7 @@ export class DashboardUserlistComponent implements OnInit {
         (error) => {
           this.bloodDonationServiceData.showAlert(
             'error',
-            'internal server Error'
+            'Internal server Error'
           );
         }
       );

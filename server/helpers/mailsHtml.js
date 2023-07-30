@@ -133,10 +133,6 @@ const accountReject = (name) => {
           border-radius: 5px;
           padding: 20px;
         }
-        .reason {
-          font-weight: bold;
-          color: #ff0000;
-        }
         .signature {
           margin-top: 20px;
           font-style: italic;

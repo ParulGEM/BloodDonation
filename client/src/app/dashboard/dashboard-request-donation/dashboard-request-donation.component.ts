@@ -11,17 +11,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class DashboardRequestDonationComponent {
   bloodDonationServiceData: any;
   dashboardData: any;
-  displayedColumns: string[] = [
-    'country',
-    'state',
-    'city',
-    'bloodGroup',
-    'recipientEmail',
-    'recipientName',
-    'createdByEmail',
-    'createdByName',
-    'action',
-  ];
   constructor(
     private bloodDonation: BloodDonationService,
     private dashboard: DashboardDonationService,
