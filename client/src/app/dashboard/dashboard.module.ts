@@ -7,8 +7,6 @@ import { DashboardUserlistComponent } from './dashboard-userlist/dashboard-userl
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardDonationlistComponent } from './dashboard-donationlist/dashboard-donationlist.component';
 import { DashboardRequestDonationComponent } from './dashboard-request-donation/dashboard-request-donation.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   {
@@ -44,9 +42,6 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    MatTableModule,
-    MatIconModule,
-
     RouterModule.forRoot(routes),
     HttpClientModule,
   ],

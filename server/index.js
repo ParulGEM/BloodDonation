@@ -22,13 +22,6 @@ app.use(authentication);
 
 app.use("/donation", donationRoutes);
 app.use("/dashboard", dashboardRoutes);
-
-// app.post("/sendEmail", async (req, res) => {
-//   const mail=req.body.mail;
-//   sendMail(mail,"Sending Mail",`<h1>Hi, sending you an email</h1>`);
-//   res.send("ok");
-// });
-
 app.use((error, req, res, next) => {
   error.statusCode = error.statusCode || 500;
   return res.status(error.statusCode).json({
