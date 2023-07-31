@@ -81,7 +81,7 @@ router.post("/login", async (req, res, next) => {
 
   const findUser = await userSchema.findOne({ email:email });
   if (!findUser) return next(new serverError("Invalid Email", 404));//
-  const isValidpassword = await bcrypt.compare(password, findUser.password);//
+  const isValidpassword = await bcrypt.compare(password, findUser.password);
   if (!isValidpassword) return next(new serverError("Incorrect password", 409));
   
   const User = {
