@@ -19,7 +19,7 @@ const authentication = async (req, res, next) => {
     let tokenUser;
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
-        return next(new serverError("Forbidden (invalid token)", 403)); // Forbidden (invalid token)
+        return next(new serverError("Forbidden (invalid token)", 403));
       }
       tokenUser = user;
     });

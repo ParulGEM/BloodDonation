@@ -22,6 +22,7 @@ app.use(authentication);
 
 app.use("/donation", donationRoutes);
 app.use("/dashboard", dashboardRoutes);
+
 app.use((error, req, res, next) => {
   error.statusCode = error.statusCode || 500;
   return res.status(error.statusCode).json({

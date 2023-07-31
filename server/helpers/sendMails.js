@@ -14,9 +14,9 @@ const sendMail =  (to, subject, html) => {
     subject,
     html,
   };
-  transporter.sendMail(mailOptions, (error, info) => {
+  transporter.sendMail(mailOptions, (error) => {
     if (error) {
-      console.log("Erroe Occured " + error);
+      console.log("Error Occured " + error);
     } else {
       console.log("Email Sent Successfully to " + mailOptions.to);
     }

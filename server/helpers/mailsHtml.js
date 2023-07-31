@@ -179,7 +179,7 @@ const donationApprove = (name, email, bloodGroup) => {
     `;
 };
 
-const donationReject = () => {
+const donationReject = (name,email,bloodGroup) => {
   return `<html>
 <head>
   <title>Blood Donation Rejection</title>
@@ -187,13 +187,13 @@ const donationReject = () => {
 <body>
   <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
     <h2 style="text-align: center;">Blood Donation Rejection</h2>
-    <p>Dear ${updatedUser.name},</p>
+    <p>Dear ${name},</p>
     <p>We regret to inform you that your blood donation request has been rejected by the admin.</p>
     <p>Donation Details:</p>
     <ul>
-      <li><strong>Name:</strong> ${updatedUser.name}</li>
-      <li><strong>Email:</strong> ${updatedUser.email}</li>
-      <li><strong>Blood Group:</strong> ${updateDonation.bloodGroup}</li>
+      <li><strong>Name:</strong> ${name}</li>
+      <li><strong>Email:</strong> ${email}</li>
+      <li><strong>Blood Group:</strong> ${bloodGroup}</li>
     </ul>
     <p>Unfortunately, we are unable to accept your donation at this time. We appreciate your willingness to contribute, but due to certain factors, it does not meet our requirements.</p>
     <p>We encourage you to continue supporting our cause and consider donating in the future when the circumstances are more suitable.</p>
