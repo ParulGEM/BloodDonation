@@ -49,7 +49,7 @@ export class BloodDonationService {
           this.showAlert('error', `error :${response.msg}`);
         }
       } else {
-        this.showAlert('error', `error :internal Server Error`);
+        this.showAlert('error', `error :Internal Server Error`);
       }
     }
   };
