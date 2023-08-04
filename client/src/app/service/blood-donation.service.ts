@@ -10,11 +10,13 @@ export class BloodDonationService {
     private snackBar: MatSnackBar,
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) {
+    
+  }
 
   jwtToken: String = '';
   isLogin: boolean = false;
-  
+
   loginBydeafault = async () => {
     const userEmail = localStorage.getItem('userEmail');
     const userPassword = localStorage.getItem('userPassword');
@@ -49,7 +51,7 @@ export class BloodDonationService {
           this.showAlert('error', `error :${response.msg}`);
         }
       } else {
-        this.showAlert('error', `error :internal Server Error`);
+        this.showAlert('error', `error :Internal Server Error`);
       }
     }
   };
