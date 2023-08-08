@@ -37,6 +37,7 @@
                         formControlName="name"
                         id="form3Example1"
                         class="form-control"
+                        (keypress)="onlyAlphabet($event)"
                         required
                       />
                       <span
@@ -57,6 +58,7 @@
                         formControlName="phone"
                         id="form3Example2"
                         class="form-control"
+                        (keypress)="onlyNumber($event)"
                         required
                       />
                       <span
@@ -115,6 +117,7 @@
                         formControlName="city"
                         id="form3Example1"
                         class="form-control"
+                        (keypress)="onlyAlphabet($event)"
                         required
                       />
                       <span
@@ -135,6 +138,7 @@
                         formControlName="state"
                         id="form3Example2"
                         class="form-control"
+                        (keypress)="onlyAlphabet($event)"
                         required
                       />
                       <span
@@ -155,6 +159,7 @@
                         formControlName="country"
                         id="form3Example2"
                         class="form-control"
+                        (keypress)="onlyAlphabet($event)"
                         required
                       />
                       <span

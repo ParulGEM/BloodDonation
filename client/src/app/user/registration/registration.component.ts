@@ -40,6 +40,22 @@ export class RegistrationComponent {
     state: new FormControl(null, Validators.required),
     country: new FormControl(null, Validators.required),
   });
+  onlyAlphabet(event: any) {
+    if (
+      (event.charCode >= 65 && event.charCode <= 90) || // Capital letters (A-Z)
+      (event.charCode >= 97 && event.charCode <= 122)
+    ) {
+      // Small letters (a-z)
+      return true;
+    }
+    return false;
+  }
+  onlyNumber(event: any) {
+    if (event.charCode > 31 && (event.charCode < 48 || event.charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
   get name() {
     return this.registerForm.get('name');
   }
@@ -87,8 +103,7 @@ export class RegistrationComponent {
               // } else {
               //   this.router.navigate(['/']);
               // }
-            }
-            else {
+            } else {
               console.log('...>>>', response);
               this.bloodDonationServiceData.showAlert(
                 'error',

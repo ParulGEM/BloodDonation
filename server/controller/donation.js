@@ -178,7 +178,9 @@ const donationCreate = async (req, res, next) => {
       return next(new serverError("Cannot save the donation", 500));
 
     await userSchema.findByIdAndUpdate(findUser._id, {
-      $push: { notification: "You created a Blood Donation" },
+      $set:{$push: { notification: "You created a Blood Donation" },}
+     // donateTime:new Date()}
+
     });
 
     const htmlcode = mailsHtml.createDonation(

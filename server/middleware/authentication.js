@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import serverError from "../helpers/serverError.js";
-const secretKey = "DONATION";
+const secretKey = `${process.env.secretKey}`;
 import userSchema from "../model/userModel.js";
 import bcrypt from "bcrypt";
 
