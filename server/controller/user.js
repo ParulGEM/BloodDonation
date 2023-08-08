@@ -8,9 +8,9 @@ import bcrypt from "bcrypt";
 import sendMail from "../helpers/sendMails.js";
 import serverError from "../helpers/serverError.js";
 
-const secretKey = "DONATION";
+const secretKey = `${process.env.secretKey}`;
 
-const saltKey = 10;
+const saltKey = `${process.env.saltKey}`;
 
 const userCreate = async (req, res, next) => {
   const { email, city, state, country, phone, name, password } = req.body;

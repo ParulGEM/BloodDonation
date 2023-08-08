@@ -10,7 +10,8 @@ import userSchema from "./model/userModel.js";
 import donationSchema from "./model/donationModel.js";
 import authentication from "./middleware/authentication.js";
 import sendMail from "./helpers/sendMails.js";
-
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());

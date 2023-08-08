@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const mongoDBConnections = () => {
   mongoose
     .connect(
-      "mongodb+srv://parulsahni3282:Parul06gem@cluster0.k2lebtg.mongodb.net/",
+      `${process.env.DBURL}`,
       { useNewUrlParser: true, useUnifiedTopology: true }
     )
     .then(() => {
