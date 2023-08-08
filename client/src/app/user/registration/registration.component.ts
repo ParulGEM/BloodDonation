@@ -76,7 +76,7 @@ export class RegistrationComponent {
 
             if (response.status) {
               console.log(response);
-              
+              // this.bloodDonationServiceData.saveUserData(response.data);
               this.bloodDonationServiceData.showAlert(
                 'success',
                 `success :${response.msg}`

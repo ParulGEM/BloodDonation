@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardDonationService } from '../service/dashboard-donation.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard-userlist',
   templateUrl: './dashboard-userlist.component.html',
@@ -13,7 +14,8 @@ export class DashboardUserlistComponent implements OnInit {
   constructor(
     private dashboardDataservice: DashboardDonationService,
     private http: HttpClient,
-    private bloodDonationService: BloodDonationService
+    private bloodDonationService: BloodDonationService,
+    private router: Router
   ) {
     this.dashboardData = dashboardDataservice;
     this.bloodDonationServiceData = bloodDonationService;
@@ -28,8 +30,7 @@ export class DashboardUserlistComponent implements OnInit {
       `Bearer ${this.bloodDonationServiceData.jwtToken}`
     );
 
-
-    console.log( `Bearer ${this.bloodDonationServiceData.jwtToken}`)
+    console.log(`Bearer ${this.bloodDonationServiceData.jwtToken}`);
     this.http
       .get('http://localhost:5000/dashboard/user', { headers })
       .subscribe(
@@ -49,6 +50,38 @@ export class DashboardUserlistComponent implements OnInit {
         }
       );
   }
+  onClickEdit(user: any) {
+    this.dashboardData.editUserData = user;
+    this.router.navigate(['dashboard/useredit', user._id]);
+  }
+  onClickDelete(user: any) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    );
+    this.http
+      .delete('http://localhost:5000/dashboard/user', {
+        headers,
+        params: { userId: user._id },
+      })
+      .subscribe(
+        (response: any) => {
+          if (response.status) {
+            this.bloodDonationServiceData.showAlert('success', response.msg);
+          } else {
+            this.bloodDonationServiceData.showAlert('error', response.msg);
+          }
+        },
+        (error) => {
+          this.bloodDonationServiceData.showAlert(
+            'error',
+            error.error.msg || 'Something went wrong'
+          );
+        }
+      );
+    this.updatelist();
+  }
+
   onRejectApprove(verified: boolean, email: string) {
     const headers = new HttpHeaders().set(
       'Authorization',

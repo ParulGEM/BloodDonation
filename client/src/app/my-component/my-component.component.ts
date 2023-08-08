@@ -43,7 +43,7 @@ export class MyComponentComponent implements OnInit {
           (error) => {
             this.bloodDonationServiceData.showAlert(
               'error',
-              'Internal Server Error'
+              'internal server Error'
             );
           }
         );
