@@ -10,7 +10,7 @@ import serverError from "../helpers/serverError.js";
 
 const secretKey = `${process.env.secretKey}`;
 
-const saltKey = `${process.env.saltKey}`;
+const saltKey = Number(process.env.saltKey);
 
 const userCreate = async (req, res, next) => {
   const { email, city, state, country, phone, name, password } = req.body;

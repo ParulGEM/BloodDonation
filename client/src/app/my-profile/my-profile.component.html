@@ -1,10 +1,20 @@
 <div class="container maindiv">
-  <div class="row justify-content-center ">
+  <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card profile-card">
+        <img
+          src="assets\edit-icon.png"
+          alt="Edit Icon"
+          (click)="onClickEdit()"
+          class="edit-icon"
+        />
         <div class="card-body">
           <div class="profile-picture-container text-center">
-            <img src="assets/146035.png" alt="Profile Picture" class="profile-picture img-fluid" />
+            <img
+              src="assets/146035.png"
+              alt="Profile Picture"
+              class="profile-picture img-fluid"
+            />
           </div>
           <div class="text-center mt-4">
             <h3 class="profile-name">{{ userData.name }}</h3>

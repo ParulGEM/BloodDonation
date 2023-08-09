@@ -7,6 +7,14 @@
 .maindiv {
   margin-top: 70px;
 }
+.edit-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
 
 .profile-picture-container {
   width: 150px;

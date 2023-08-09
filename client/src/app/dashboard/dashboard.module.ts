@@ -7,7 +7,6 @@ import { DashboardUserlistComponent } from './dashboard-userlist/dashboard-userl
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardDonationlistComponent } from './dashboard-donationlist/dashboard-donationlist.component';
 import { DashboardRequestDonationComponent } from './dashboard-request-donation/dashboard-request-donation.component';
-import { UserFormComponent } from './user-form/user-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DonationFormComponent } from './donation-form/donation-form.component';
 
@@ -31,7 +30,7 @@ const routes: Routes = [
         path: 'donation-request',
         component: DashboardRequestDonationComponent,
       },
-      { path: 'useredit/:id', component: UserFormComponent },
+    
     ],
   },
 ];
@@ -43,7 +42,6 @@ const routes: Routes = [
     DashboardUserlistComponent,
     DashboardDonationlistComponent,
     DashboardRequestDonationComponent,
-    UserFormComponent,
     DonationFormComponent,
   ],
   imports: [

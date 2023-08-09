@@ -32,6 +32,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { SearchComponent } from './pages/search/search.component';
 import { DonationDetailsComponent } from './donation-details/donation-details.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { DonationEditComponent } from './components/donation-edit/donation-edit.component';
 // import { FooterComponent } from './app/footer/footer.component';
 const routes: Routes = [
   {
@@ -50,7 +52,7 @@ const routes: Routes = [
     ],
   },
   { path: 'details/:id', component: DonationDetailsComponent },
-  { 
+  {
     path: 'donate',
     children: [{ path: 'create', component: CreateComponent }],
   },
@@ -62,7 +64,10 @@ const routes: Routes = [
     path: 'profile',
     component: MyProfileComponent,
   },
+  { path: 'useredit/:id', component: UserEditComponent },
+  { path: 'donationedit/:id', component: DonationEditComponent },
 ];
+
 @NgModule({
   declarations: [
     AppComponent,

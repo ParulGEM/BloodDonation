@@ -8,5 +8,4 @@ export class DashboardDonationService {
   userList: [] = [];
   donationList: [] = [];
   requestedDonationData: [] = [];
-  editUserData: {} = {};
 }

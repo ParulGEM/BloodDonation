@@ -14,7 +14,7 @@ const userSchema = new Schema(
     country: { type: String, trim: true, required: true },
     notification: [{ type: String }],
     verified: { type: Boolean, default: false },
-    //donateTime: { type: Date },
+    donateTime: { type: Date },
   },
   { timestamps: true }
 );

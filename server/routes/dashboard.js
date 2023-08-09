@@ -10,6 +10,10 @@ router
   .put(dashboardControl.dashboardEditUser)
   .delete(dashboardControl.dashboardDeleteUser);
 
+router
+  .route("/donation")
+  .put(dashboardControl.dashboardDonationEdit)
+  .delete(dashboardControl.dashboardDeleteDonation);
 router.post("/approve/user", dashboardControl.dashboardUserApprove);
 
 router.post("/approve/donation", dashboardControl.dashboardDonationApprove);
