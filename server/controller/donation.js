@@ -3,7 +3,7 @@ import userSchema from "../model/userModel.js";
 import Joi from "joi";
 import senMail from "../helpers/sendMails.js";
 import mailsHtml from "../helpers/mailsHtml.js";
-
+import moment from "moment";
 import serverError from "../helpers/serverError.js";
 
 const donationCreate = async (req, res, next) => {
@@ -142,12 +142,24 @@ const donationCreate = async (req, res, next) => {
     }${surgeryHistoryBloodTransfusion ? "Blood Transfusion  " : ""}`;
 
     const findUser = await userSchema.findById(createdBy);
-
-    console.log("----<<< createdBy", createdBy, "\nfindUser", findUser);
-
     if (!findUser) return next(new serverError("Invalid user"));
-
     if (!findUser.verified) return next(new serverError("User not verified"));
+
+    if (findUser.donateTime) {
+      let month = gender === "male" ? 3 : 4;
+      let validDonationDate = moment(findUser.donateTime).add(month, "M");
+      if (validDonationDate > moment()) {
+        return next(
+          new serverError(
+            `Cannot Donate before ${moment(
+              validDonationDate,
+              "ddd MMM DD YYYY HH:mm:ss [GMT]ZZ"
+            ).format("ddd MMM DD YYYY")}`
+          )
+        );
+      }
+    }
+
     const donationCreate = await donationSchema.create({
       createdBy,
       country: findUser.country.toUpperCase(),
@@ -176,11 +188,12 @@ const donationCreate = async (req, res, next) => {
 
     if (!donationCreate)
       return next(new serverError("Cannot save the donation", 500));
-
+    findUser.notification.push("You created a Blood Donation");
     await userSchema.findByIdAndUpdate(findUser._id, {
-      $set:{$push: { notification: "You created a Blood Donation" },}
-     // donateTime:new Date()}
-
+      $set: {
+        notification: findUser.notification,
+        donateTime: moment(),
+      },
     });
 
     const htmlcode = mailsHtml.createDonation(

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BloodDonationService } from '../service/blood-donation.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-my-component',
   templateUrl: './my-component.component.html',
@@ -12,7 +12,8 @@ export class MyComponentComponent implements OnInit {
   bloodDonationServiceData: any;
   constructor(
     private bloodDonation: BloodDonationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     this.bloodDonationServiceData = bloodDonation;
   }
@@ -48,5 +49,9 @@ export class MyComponentComponent implements OnInit {
           }
         );
     }
+  }
+  onClickEdit(donor: any) {
+    this.bloodDonationServiceData.donationEdit = donor;
+    this.router.navigate(['/donationedit', donor._id]);
   }
 }

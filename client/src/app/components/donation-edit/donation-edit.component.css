@@ -1,0 +1,65 @@
+.bg-img{
+    background-image: url('/assets/donate-landing.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  /* Styles for the form container */
+  .container {
+    background-color: rgba(255, 255, 255, 0.95); /* Set the alpha value to control transparency */
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2{
+    color:#c10f0f;
+  }
+  
+  
+  /* Style for the form title */
+  .form-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Style for form fields */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Style for radio buttons and checkboxes */
+  .form-check-label {
+    margin-left: 5px;
+  }
+  
+  /* Style for submit button */
+  .submit-button-container {
+    text-align: center;
+  }
+  
+  /* Additional style for select dropdown */
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  /* Additional style for textarea */
+  textarea.form-control {
+    resize: vertical;
+  }
+  
+  /* Additional style for checkboxes */
+  .form-check-input {
+    margin-right: 5px;
+  }
+  
+  /* Additional style for radio buttons */
+  .form-check-inline {
+    margin-right: 15px;
+  }
+  

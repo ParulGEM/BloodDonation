@@ -51,8 +51,8 @@ export class DashboardUserlistComponent implements OnInit {
       );
   }
   onClickEdit(user: any) {
-    this.dashboardData.editUserData = user;
-    this.router.navigate(['dashboard/useredit', user._id]);
+    this.bloodDonationServiceData.editUser = user;
+    this.router.navigate(['/useredit', user._id]);
   }
   onClickDelete(user: any) {
     const headers = new HttpHeaders().set(

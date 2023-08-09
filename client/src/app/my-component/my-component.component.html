@@ -116,6 +116,21 @@
             <th scope="row">Recipient : Email</th>
             <td>{{ donor?.recipienter?.email || "Not Given" }}</td>
           </tr>
+          <tr
+            *ngIf="
+              bloodDonationServiceData.userData.userId === donor?.createdBy?._id
+            "
+          >
+            <th scope="row">edit</th>
+            <td>
+              <img
+                src="assets\edit-icon.png"
+                alt="Edit Icon"
+                (click)="onClickEdit(donor)"
+                class="edit-icon"
+              />
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

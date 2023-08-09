@@ -2,27 +2,25 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DashboardDonationService } from '../service/dashboard-donation.service';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
 @Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css'],
+  selector: 'app-user-edit',
+  templateUrl: './user-edit.component.html',
+  styleUrls: ['./user-edit.component.css'],
 })
-export class UserFormComponent {
+export class UserEditComponent {
   userData: any = {};
   dashboardData: any;
   registerForm: any;
   bloodDonationServiceData: any;
   constructor(
-    private dashboardDataservice: DashboardDonationService,
     private http: HttpClient,
     private bloodDonationService: BloodDonationService,
     private router: Router
   ) {
     this.bloodDonationServiceData = bloodDonationService;
-    this.dashboardData = dashboardDataservice;
-    this.userData = this.dashboardData.editUserData;
+
+    this.userData = this.bloodDonationServiceData.editUser;
     console.log('====>>>>this.userData', this.userData);
     this.registerForm = new FormGroup({
       name: new FormControl(this.userData?.name || '', [
@@ -41,7 +39,7 @@ export class UserFormComponent {
     });
   }
   get name() {
-    return this.registerForm.get('name')?.setValue(this.userData.name);
+    return this.registerForm.get('name');
   }
 
   get city() {
@@ -54,7 +52,10 @@ export class UserFormComponent {
     return this.registerForm.get('state');
   }
   onSubmit(userData: any) {
-    const body = { ...this.registerForm.value, userId: this.userData._id };
+    const body = {
+      ...this.registerForm.value,
+      userId: this.userData._id || this.userData.userId,
+    };
 
     console.log(
       'this.bloodDonationServiceData.jwtToken==>>',
@@ -71,9 +72,14 @@ export class UserFormComponent {
       .subscribe(
         (response: any) => {
           if (response.status) {
-            this.dashboardData.userList = response.data;
             this.bloodDonationServiceData.showAlert('success', response.msg);
-            this.router.navigate(['/dashboard/users']);
+
+            if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
+              this.router.navigate(['/dashboard/users']);
+            } else {
+              this.bloodDonationServiceData.userData = response.data;
+              this.router.navigate(['profile']);
+            }
           } else {
             this.bloodDonationServiceData.showAlert('error', response.msg);
           }

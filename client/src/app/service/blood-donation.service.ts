@@ -11,10 +11,11 @@ export class BloodDonationService {
     private http: HttpClient,
     private router: Router
   ) {}
-
+  editUser: {} = {};
+  donationEdit: {} = {};
   jwtToken: String = '';
   isLogin: boolean = false;
-  
+
   loginBydeafault = async () => {
     const userEmail = localStorage.getItem('userEmail');
     const userPassword = localStorage.getItem('userPassword');
