@@ -7,7 +7,7 @@
       class="registration-form"
     >
       <div class="form-group">
-        <label>Blood Group</label>
+        <label>Blood Group*</label>
         <select
           name="bloodGroup"
           id="bloodGroup"
@@ -36,7 +36,7 @@
       <div class="form-group">
         <div class="row">
           <div class="col-md-6">
-            <label>Gender:</label>
+            <label>Gender*</label>
             <span
               [ngStyle]="{ color: 'red' }"
               *ngIf="gender && gender.invalid && gender.touched"
@@ -76,7 +76,7 @@
           </div>
 
           <div class="col-md-6">
-            <label>Have you donated previously? </label>
+            <label>Have you donated previously?* </label>
             <span
               [ngStyle]="{ color: 'red' }"
               *ngIf="healthIssue && healthIssue.invalid && healthIssue.touched"
@@ -131,7 +131,7 @@
       </div>
 
       <div class="form-group">
-        <label>Birth Date</label>
+        <label>Birth Date*</label>
         <input
           class="form-control"
           type="date"
@@ -146,7 +146,7 @@
       </div>
 
       <div class="form-group">
-        <label>Occupation</label>
+        <label>Occupation*</label>
         <input
           class="form-control"
           type="text"
@@ -161,7 +161,7 @@
       </div>
 
       <div class="form-group">
-        <label>Address / Colony / Village</label>
+        <label>Address / Colony / Village*</label>
         <input
           class="form-control"
           type="text"
@@ -183,7 +183,7 @@
       <div class="form-group">
         <div class="row">
           <div class="col-md-6">
-            <label>Weight</label>
+            <label>Weight*</label>
             <input
               class="form-control"
               type="number"
@@ -191,7 +191,7 @@
             />
           </div>
           <div class="col-md-6">
-            <label>Pulse</label>
+            <label>Pulse*</label>
             <input class="form-control" type="number" formControlName="pulse" />
           </div>
         </div>
@@ -200,18 +200,18 @@
       <div class="form-group">
         <div class="row">
           <div class="col-md-6">
-            <label>Haemoglobin</label>
+            <label>Haemoglobin*</label>
             <input class="form-control" type="number" formControlName="hb" />
           </div>
           <div class="col-md-6">
-            <label>Blood Pressure</label>
+            <label>Blood Pressure*</label>
             <input class="form-control" type="text" formControlName="bp" />
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <label>Temperature</label>
+        <label>Temperature*</label>
         <input class="form-control" type="text" formControlName="temperature" />
       </div>
 
@@ -454,7 +454,7 @@
       </div>
 
       <div class="form-group">
-        <label>When can you donate blood?</label>
+        <label>When can you donate blood?*</label>
         <input
           class="form-control"
           type="date"
@@ -471,7 +471,7 @@
         >
       </div>
       <div class="form-group">
-        <label>Any Specific Time</label>
+        <label>Any Specific Time*</label>
         <input
           class="form-control"
           type="text"
