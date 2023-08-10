@@ -34,7 +34,7 @@ import { SearchComponent } from './pages/search/search.component';
 import { DonationDetailsComponent } from './pages/donation-details/donation-details.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { DonationEditComponent } from './components/donation-edit/donation-edit.component';
-// import { FooterComponent } from './app/footer/footer.component';
+import { UserAuthGuard } from './authguard/user-auth.guard';
 const routes: Routes = [
   {
     path: '',
@@ -43,6 +43,7 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent,
+    canActivate: [UserAuthGuard],
   },
   {
     path: 'user',
@@ -51,21 +52,37 @@ const routes: Routes = [
       { path: 'registration', component: RegistrationComponent },
     ],
   },
-  { path: 'details/:id', component: DonationDetailsComponent },
+  {
+    path: 'details/:id',
+    component: DonationDetailsComponent,
+    canActivate: [UserAuthGuard],
+  },
   {
     path: 'donate',
     children: [{ path: 'create', component: CreateComponent }],
+    canActivate: [UserAuthGuard],
   },
   {
     path: 'mydonation',
     component: MyComponentComponent,
+
+    canActivate: [UserAuthGuard],
   },
   {
     path: 'profile',
     component: MyProfileComponent,
+    canActivate: [UserAuthGuard],
   },
-  { path: 'useredit/:id', component: UserEditComponent },
-  { path: 'donationedit/:id', component: DonationEditComponent },
+  {
+    path: 'useredit/:id',
+    component: UserEditComponent,
+    canActivate: [UserAuthGuard],
+  },
+  {
+    path: 'donationedit/:id',
+    component: DonationEditComponent,
+    canActivate: [UserAuthGuard],
+  },
 ];
 
 @NgModule({
