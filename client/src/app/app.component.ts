@@ -19,10 +19,6 @@ export class AppComponent implements OnInit {
   }
   ngOnInit() {
     this.bloodDonationServiceData.loginBydeafault();
-
-    if (!this.bloodDonationServiceData.isLogin) {
-      this.router.navigate(['/']);
-    }
   }
   title = 'RedDrop';
 }

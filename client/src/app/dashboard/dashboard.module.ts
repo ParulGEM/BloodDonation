@@ -9,6 +9,7 @@ import { DashboardDonationlistComponent } from './dashboard-donationlist/dashboa
 import { DashboardRequestDonationComponent } from './dashboard-request-donation/dashboard-request-donation.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DonationFormComponent } from './donation-form/donation-form.component';
+import { AdminAuthGuard } from '../authguard/admin-auth.guard';
 
 const routes: Routes = [
   {
@@ -17,20 +18,23 @@ const routes: Routes = [
       {
         path: '',
         component: DashboardHomeComponent,
+        canActivate: [AdminAuthGuard],
       },
       {
         path: 'users',
         component: DashboardUserlistComponent,
+        canActivate: [AdminAuthGuard],
       },
       {
         path: 'donation-list',
         component: DashboardDonationlistComponent,
+        canActivate: [AdminAuthGuard],
       },
       {
         path: 'donation-request',
         component: DashboardRequestDonationComponent,
+        canActivate: [AdminAuthGuard],
       },
-    
     ],
   },
 ];

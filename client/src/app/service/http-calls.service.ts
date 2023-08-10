@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BloodDonationService } from './blood-donation.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpCallsService {
   bloodDonationServiceData: any;
-  url = 'http://localhost:5000/';
+  url = environment.apiURL;
   headers: any;
   constructor(
     private http: HttpClient,
