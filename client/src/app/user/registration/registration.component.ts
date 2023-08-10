@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
 import { Router } from '@angular/router';
+import { HttpCallsService } from 'src/app/service/http-calls.service';
+
 BloodDonationService;
 @Component({
   selector: 'app-registration',
@@ -11,12 +13,15 @@ BloodDonationService;
 })
 export class RegistrationComponent {
   bloodDonationServiceData: any;
+  HttpCalls: any;
   constructor(
     private http: HttpClient,
     private bloodDonationService: BloodDonationService,
-    private router: Router
+    private router: Router,
+    private httpCallsService: HttpCallsService
   ) {
     this.bloodDonationServiceData = bloodDonationService;
+    this.HttpCalls = httpCallsService;
   }
   registerForm = new FormGroup({
     name: new FormControl(null, [
@@ -43,7 +48,7 @@ export class RegistrationComponent {
   onlyAlphabet(event: any) {
     if (
       (event.charCode >= 65 && event.charCode <= 90) || // Capital letters (A-Z)
-      (event.charCode >= 97 && event.charCode <= 122) || (event.charCode==32)
+      (event.charCode >= 97 && event.charCode <= 122)
     ) {
       // Small letters (a-z)
       return true;
@@ -79,46 +84,37 @@ export class RegistrationComponent {
   }
   onSubmit(event: Event) {
     event.preventDefault();
-    const headers = new HttpHeaders();
 
     if (this.registerForm.valid) {
-      this.http
-        .post('http://localhost:5000/user/create', this.registerForm.value, {
-          headers,
-        })
-        .subscribe(
-          (response: any) => {
-            console.log('RESPONSE ==>', response);
+      this.HttpCalls.postApi('user/create', this.registerForm.value).subscribe(
+        (response: any) => {
+          console.log('RESPONSE ==>', response);
 
-            if (response.status) {
-              console.log(response);
-              // this.bloodDonationServiceData.saveUserData(response.data);
-              this.bloodDonationServiceData.showAlert(
-                'success',
-                `success :${response.msg}`
-              );
-              this.router.navigate(['/user/login']);
-              // if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
-              //   this.router.navigate(['/dashboard/']);
-              // } else {
-              //   this.router.navigate(['/']);
-              // }
-            } else {
-              console.log('...>>>', response);
-              this.bloodDonationServiceData.showAlert(
-                'error',
-                `error :${response.msg}`
-              );
-            }
-          },
-          (error: any) => {
-            console.log('===>', error);
+          if (response.status) {
+            console.log(response);
+            // this.bloodDonationServiceData.saveUserData(response.data);
+            this.bloodDonationServiceData.showAlert(
+              'success',
+              `success :${response.msg}`
+            );
+            this.router.navigate(['/user/login']);
+    
+          } else {
+            console.log('...>>>', response);
             this.bloodDonationServiceData.showAlert(
               'error',
-              `${error.error.msg}`
+              `error :${response.msg}`
             );
           }
-        );
+        },
+        (error: any) => {
+          console.log('===>', error);
+          this.bloodDonationServiceData.showAlert(
+            'error',
+            `${error.error.msg}`
+          );
+        }
+      );
     } else {
       this.bloodDonationServiceData.showAlert('Error', 'Invalid form');
     }

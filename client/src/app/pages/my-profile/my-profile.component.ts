@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BloodDonationService } from '../service/blood-donation.service';
+import { BloodDonationService } from '../../service/blood-donation.service';
 import { Router } from '@angular/router';
 BloodDonationService;
 @Component({

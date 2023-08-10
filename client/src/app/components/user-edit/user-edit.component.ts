@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
+import { HttpCallsService } from 'src/app/service/http-calls.service';
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
@@ -13,15 +14,17 @@ export class UserEditComponent {
   dashboardData: any;
   registerForm: any;
   bloodDonationServiceData: any;
+  HttpCalls: any;
   constructor(
     private http: HttpClient,
     private bloodDonationService: BloodDonationService,
-    private router: Router
+    private router: Router,
+    private httpCallsService: HttpCallsService
   ) {
     this.bloodDonationServiceData = bloodDonationService;
+    this.HttpCalls = httpCallsService;
 
     this.userData = this.bloodDonationServiceData.editUser;
-    console.log('====>>>>this.userData', this.userData);
     this.registerForm = new FormGroup({
       name: new FormControl(this.userData?.name || '', [
         Validators.required,
@@ -57,39 +60,27 @@ export class UserEditComponent {
       userId: this.userData._id || this.userData.userId,
     };
 
-    console.log(
-      'this.bloodDonationServiceData.jwtToken==>>',
-      this.bloodDonationServiceData.jwtToken
-    );
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.bloodDonationServiceData.jwtToken}`
-    );
+    this.HttpCalls.putApi('dashboard/user', body).subscribe(
+      (response: any) => {
+        if (response.status) {
+          this.bloodDonationServiceData.showAlert('success', response.msg);
 
-    console.log('====>>>>body', body);
-    this.http
-      .put('http://localhost:5000/dashboard/user', body, { headers })
-      .subscribe(
-        (response: any) => {
-          if (response.status) {
-            this.bloodDonationServiceData.showAlert('success', response.msg);
-
-            if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
-              this.router.navigate(['/dashboard/users']);
-            } else {
-              this.bloodDonationServiceData.userData = response.data;
-              this.router.navigate(['profile']);
-            }
+          if (this.bloodDonationServiceData.userData.userType === 'ADMIN') {
+            this.router.navigate(['/dashboard/users']);
           } else {
-            this.bloodDonationServiceData.showAlert('error', response.msg);
+            this.bloodDonationServiceData.userData = response.data;
+            this.router.navigate(['profile']);
           }
-        },
-        (err) => {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            err.error.message || 'Something went wrong'
-          );
+        } else {
+          this.bloodDonationServiceData.showAlert('error', response.msg);
         }
-      );
+      },
+      (err: any) => {
+        this.bloodDonationServiceData.showAlert(
+          'error',
+          err.error.message || 'Something went wrong'
+        );
+      }
+    );
   }
 }

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserModule } from './user/user.module';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './user/login/login.component';
@@ -17,8 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { PagesModule } from './pages/pages.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { MyComponentComponent } from './my-component/my-component.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyComponentComponent } from './pages/my-component/my-component.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -31,7 +31,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { SearchComponent } from './pages/search/search.component';
-import { DonationDetailsComponent } from './donation-details/donation-details.component';
+import { DonationDetailsComponent } from './pages/donation-details/donation-details.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { DonationEditComponent } from './components/donation-edit/donation-edit.component';
 // import { FooterComponent } from './app/footer/footer.component';
