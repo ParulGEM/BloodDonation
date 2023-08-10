@@ -30,48 +30,17 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { SearchComponent } from './pages/search/search.component';
 import { DonationDetailsComponent } from './pages/donation-details/donation-details.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { DonationEditComponent } from './components/donation-edit/donation-edit.component';
 import { UserAuthGuard } from './authguard/user-auth.guard';
+
+
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-  },
-  {
-    path: 'search',
-    component: SearchComponent,
-    canActivate: [UserAuthGuard],
-  },
-  {
-    path: 'user',
-    children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'registration', component: RegistrationComponent },
-    ],
-  },
-  {
-    path: 'details/:id',
-    component: DonationDetailsComponent,
-    canActivate: [UserAuthGuard],
-  },
-  {
-    path: 'donate',
-    children: [{ path: 'create', component: CreateComponent }],
-    canActivate: [UserAuthGuard],
-  },
-  {
-    path: 'mydonation',
-    component: MyComponentComponent,
-
-    canActivate: [UserAuthGuard],
-  },
-  {
-    path: 'profile',
-    component: MyProfileComponent,
-    canActivate: [UserAuthGuard],
+    loadChildren: () =>
+      import('./pages/pages.module').then((m) => m.PagesModule),
   },
   {
     path: 'useredit/:id',
@@ -81,6 +50,20 @@ const routes: Routes = [
   {
     path: 'donationedit/:id',
     component: DonationEditComponent,
+    canActivate: [UserAuthGuard],
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
+  },
+  {
+    path: 'details/:id',
+    component: DonationDetailsComponent,
+    canActivate: [UserAuthGuard],
+  },
+  {
+    path: 'donate',
+    children: [{ path: 'create', component: CreateComponent }],
     canActivate: [UserAuthGuard],
   },
 ];
