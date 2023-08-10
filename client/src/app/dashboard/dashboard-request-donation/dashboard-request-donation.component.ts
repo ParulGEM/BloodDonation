@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
-import { DashboardDonationService } from '../service/dashboard-donation.service';
+import { DashboardDonationService } from '../../service/dashboard-donation.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpCallsService } from 'src/app/service/http-calls.service';
 
 @Component({
   selector: 'app-dashboard-request-donation',
@@ -10,70 +11,57 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class DashboardRequestDonationComponent {
   bloodDonationServiceData: any;
+  HttpCalls: any;
   dashboardData: any;
   constructor(
     private bloodDonation: BloodDonationService,
     private dashboard: DashboardDonationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private httpCallsService: HttpCallsService
   ) {
     this.bloodDonationServiceData = bloodDonation;
     this.dashboardData = dashboard;
+    this.HttpCalls = httpCallsService;
     this.getDetails();
   }
   getDetails() {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    this.HttpCalls.getApi('donation/filter', { requested: true }).subscribe(
+      (response: any) => {
+        console.log(response);
+        if (response.status) {
+          this.dashboard.requestedDonationData = response.data;
+        } else {
+          this.bloodDonationServiceData.showAlert('error', response.msg);
+        }
+      },
+      (error: any) => {
+        this.bloodDonationServiceData.showAlert('error', 'Internal server');
+      }
     );
-    this.http
-      .get('http://localhost:5000/donation/filter', {
-        params: { requested: true },
-        headers,
-      })
-      .subscribe(
-        (response: any) => {
-          console.log(response);
+  }
+  onRejectApprove(status: boolean, donationId: string) {
+    this.HttpCalls.postApi('dashboard/approve/donation-request', {
+      status,
+      donationId,
+    }).subscribe(
+      (response: any) => {
+        if (response) {
           if (response.status) {
-            this.dashboard.requestedDonationData = response.data;
+            this.bloodDonationServiceData.showAlert('success', response.msg);
           } else {
             this.bloodDonationServiceData.showAlert('error', response.msg);
           }
-        },
-        (error) => {
-          this.bloodDonationServiceData.showAlert('error', 'Internal server');
+        } else {
+          this.bloodDonationServiceData.showAlert(
+            'error',
+            'internal server error'
+          );
         }
-      );
-  }
-  onRejectApprove(status: boolean, donationId: string) {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+      },
+      (error: any) => {
+        console.error(error);
+      }
     );
-    this.http
-      .post(
-        'http://localhost:5000/dashboard/approve/donation-request',
-        { status, donationId },
-        { headers }
-      )
-      .subscribe(
-        (response: any) => {
-          if (response) {
-            if (response.status) {
-              this.bloodDonationServiceData.showAlert('success', response.msg);
-            } else {
-              this.bloodDonationServiceData.showAlert('error', response.msg);
-            }
-          } else {
-            this.bloodDonationServiceData.showAlert(
-              'error',
-              'internal server error'
-            );
-          }
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
     this.getDetails();
   }
 }

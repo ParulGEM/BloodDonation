@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardDonationService } from '../service/dashboard-donation.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DashboardDonationService } from '../../service/dashboard-donation.service';
+import { HttpParams } from '@angular/common/http';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
 import { Router } from '@angular/router';
+import { HttpCallsService } from 'src/app/service/http-calls.service';
 @Component({
   selector: 'app-dashboard-userlist',
   templateUrl: './dashboard-userlist.component.html',
@@ -11,103 +12,99 @@ import { Router } from '@angular/router';
 export class DashboardUserlistComponent implements OnInit {
   dashboardData: any;
   bloodDonationServiceData: any;
+  HttpCalls: any;
   constructor(
     private dashboardDataservice: DashboardDonationService,
-    private http: HttpClient,
     private bloodDonationService: BloodDonationService,
-    private router: Router
+    private router: Router,
+    private httpCallsService: HttpCallsService
   ) {
     this.dashboardData = dashboardDataservice;
     this.bloodDonationServiceData = bloodDonationService;
+    this.HttpCalls = httpCallsService;
   }
   ngOnInit(): void {
     this.updatelist();
   }
 
   updatelist(): void {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.bloodDonationServiceData.jwtToken}`
-    );
+    // const headers = new HttpHeaders().set(
+    //   'Authorization',
+    //   `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    // );
 
-    console.log(`Bearer ${this.bloodDonationServiceData.jwtToken}`);
-    this.http
-      .get('http://localhost:5000/dashboard/user', { headers })
-      .subscribe(
-        (response: any) => {
-          if (response.status) {
-            this.dashboardData.userList = response.data;
-            this.bloodDonationServiceData.showAlert('success', response.msg);
-          } else {
-            this.bloodDonationServiceData.showAlert('error', response.msg);
-          }
-        },
-        (error) => {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'internal server Error'
-          );
+    // console.log(`Bearer ${this.bloodDonationServiceData.jwtToken}`);
+    // this.http
+    //   .get('http://localhost:5000/dashboard/user', { headers })
+
+    const params = new HttpParams();
+    this.HttpCalls.getApi('dashboard/user', params).subscribe(
+      (response: any) => {
+        if (response.status) {
+          this.dashboardData.userList = response.data;
+          this.bloodDonationServiceData.showAlert('success', response.msg);
+        } else {
+          this.bloodDonationServiceData.showAlert('error', response.msg);
         }
-      );
+      },
+      (error: any) => {
+        this.bloodDonationServiceData.showAlert(
+          'error',
+          'internal server Error'
+        );
+      }
+    );
   }
   onClickEdit(user: any) {
     this.bloodDonationServiceData.editUser = user;
     this.router.navigate(['/useredit', user._id]);
   }
   onClickDelete(user: any) {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    this.HttpCalls.deleteApi('dashboard/user', { userId: user._id }).subscribe(
+      (response: any) => {
+        if (response.status) {
+          this.bloodDonationServiceData.showAlert('success', response.msg);
+        } else {
+          this.bloodDonationServiceData.showAlert('error', response.msg);
+        }
+      },
+      (error: any) => {
+        this.bloodDonationServiceData.showAlert(
+          'error',
+          error.error.msg || 'Something went wrong'
+        );
+      }
     );
-    this.http
-      .delete('http://localhost:5000/dashboard/user', {
-        headers,
-        params: { userId: user._id },
-      })
-      .subscribe(
-        (response: any) => {
+    this.updatelist();
+  }
+
+  onRejectApprove(verified: boolean, email: string) {
+    // const headers = new HttpHeaders().set(
+    //   'Authorization',
+    //   `Bearer ${this.bloodDonationServiceData.jwtToken}`
+    // );
+    const body = { verified, email };
+    // console.log('===> body', body);
+    // this.http
+    //   .post('http://localhost:5000/dashboard/approve/user', body, { headers })
+
+    this.HttpCalls.postApi('dashboard/approve/user', body).subscribe(
+      (response: any) => {
+        if (response) {
           if (response.status) {
             this.bloodDonationServiceData.showAlert('success', response.msg);
           } else {
             this.bloodDonationServiceData.showAlert('error', response.msg);
           }
-        },
-        (error) => {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            error.error.msg || 'Something went wrong'
-          );
         }
-      );
-    this.updatelist();
-  }
-
-  onRejectApprove(verified: boolean, email: string) {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.bloodDonationServiceData.jwtToken}`
+        this.updatelist();
+      },
+      (error: any) => {
+        this.bloodDonationServiceData.showAlert(
+          'error',
+          'Internal server Error'
+        );
+      }
     );
-    const body = { verified, email };
-    console.log('===> body', body);
-    this.http
-      .post('http://localhost:5000/dashboard/approve/user', body, { headers })
-      .subscribe(
-        (response: any) => {
-          if (response) {
-            if (response.status) {
-              this.bloodDonationServiceData.showAlert('success', response.msg);
-            } else {
-              this.bloodDonationServiceData.showAlert('error', response.msg);
-            }
-          }
-          this.updatelist();
-        },
-        (error) => {
-          this.bloodDonationServiceData.showAlert(
-            'error',
-            'Internal server Error'
-          );
-        }
-      );
   }
 }

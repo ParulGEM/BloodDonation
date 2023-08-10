@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BloodDonationService } from 'src/app/service/blood-donation.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { HttpCallsService } from 'src/app/service/http-calls.service';
 
 @Component({
   selector: 'app-view-donation',
@@ -9,15 +10,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./view-donation.component.css'],
 })
 export class ViewDonationComponent implements OnInit {
-  
+  HttpCalls: any;
   bloodDonationServiceData: any;
   constructor(
     private router: Router,
     private bloodDonation: BloodDonationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private httpCallsService: HttpCallsService
   ) {
     this.bloodDonationServiceData = bloodDonation;
-    console.log('donationArry-->', this.bloodDonationServiceData.donationArray);
+    this.HttpCalls = httpCallsService;
   }
   ngOnInit(): void {
     const headers = new HttpHeaders().set(
@@ -25,31 +27,30 @@ export class ViewDonationComponent implements OnInit {
       `Bearer ${this.bloodDonationServiceData.jwtToken}`
     );
 
-    this.http
-      .get('http://localhost:5000/donation/filter', { headers })
-      .subscribe(
-        (response: any) => {
-          if (response) {
-            if (response.status) {
-              this.bloodDonationServiceData.donationArray = response.data;
-            } else {
-              this.bloodDonationServiceData.showAlert('error', response.msg);
-            }
+    // this.http
+    //   .get('http://localhost:5000/donation/filter', { headers })
+
+    const params = new HttpParams();
+    this.HttpCalls.getApi('donation/filter', params).subscribe(
+      (response: any) => {
+        if (response) {
+          if (response.status) {
+            this.bloodDonationServiceData.donationArray = response.data;
           } else {
-            this.bloodDonationServiceData.showAlert(
-              'error',
-              'internal server error'
-            );
+            this.bloodDonationServiceData.showAlert('error', response.msg);
           }
-        },
-        (error) => {
-          console.log(error);
+        } else {
           this.bloodDonationServiceData.showAlert(
             'error',
-            'An error occurred.'
+            'internal server error'
           );
         }
-      );
+      },
+      (error: any) => {
+        console.log(error);
+        this.bloodDonationServiceData.showAlert('error', 'An error occurred.');
+      }
+    );
   }
   addDonation(donation: any) {
     this.router.navigate(['details', donation._id]);

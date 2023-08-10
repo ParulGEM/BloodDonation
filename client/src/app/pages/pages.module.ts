@@ -5,7 +5,7 @@ import { ComponentsModule } from '../components/components.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchComponent } from './search/search.component';
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../components/footer/footer.component';
 
 import { RouterModule, Routes } from '@angular/router';
 
