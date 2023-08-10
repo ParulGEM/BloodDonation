@@ -17,7 +17,7 @@ export class HttpCallsService {
     this.bloodDonationServiceData = bloodDonationService;
     this.headers = new HttpHeaders().set(
       'Authorization',
-      `Bearer ${this.bloodDonationServiceData.jwtToken || ''}`
+      `Bearer ${this.bloodDonationServiceData.jwtToken}`
     );
   }
   putApi(endPonit: string, body: any) {
