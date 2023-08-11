@@ -1,4 +1,12 @@
 .main {
     margin-top: 70px;
   }
-  
+
+  .container {
+    background-color: rgba(255, 255, 255, 0.95); /* Set the alpha value to control transparency */
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }

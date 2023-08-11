@@ -5,11 +5,7 @@ import userRoutes from "./routes/userRoutes.js";
 import mongoDBConnections from "./mongoDBConnection.js";
 import donationRoutes from "./routes/donationRoutes.js";
 import dashboardRoutes from "./routes/dashboard.js";
-
-import userSchema from "./model/userModel.js";
-import donationSchema from "./model/donationModel.js";
 import authentication from "./middleware/authentication.js";
-import sendMail from "./helpers/sendMails.js";
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
