@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BloodDonationService } from 'src/app/service/blood-donation.service';
 import { Router } from '@angular/router';
+import { BloodDonationService } from 'src/app/service/blood-donation.service';
 import { HttpCallsService } from 'src/app/service/http-calls.service';
 
-BloodDonationService;
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -15,7 +13,6 @@ export class RegistrationComponent {
   bloodDonationServiceData: any;
   HttpCalls: any;
   constructor(
-    private http: HttpClient,
     private bloodDonationService: BloodDonationService,
     private router: Router,
     private httpCallsService: HttpCallsService
@@ -98,7 +95,6 @@ export class RegistrationComponent {
               `success :${response.msg}`
             );
             this.router.navigate(['/user/login']);
-    
           } else {
             console.log('...>>>', response);
             this.bloodDonationServiceData.showAlert(

@@ -1,0 +1,88 @@
+<div class="container ">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <mat-card class="profile-card">
+          <h1 class="profile-title m-auto">Donation Details</h1>
+          <div class="image-container">
+            <img
+              [src]="'/assets/bloodDonation/' + donationData.bloodGroup + '.png'"
+              alt="Profile Picture"
+              class="profile-picture"
+              style="height: 25%; width: 25%"
+            />
+          </div>
+          <mat-card-content>
+            <div class="text-container">
+              <h5 class="profile-name">
+                Donor Name: {{ donationData.createdBy.name }}
+              </h5>
+              <p class="profile-text">
+                Donor Email: {{ donationData.createdBy.email }}
+              </p>
+              <p class="profile-text">
+                Donor Phone: {{ donationData.createdBy.phone }}
+              </p>
+              <p class="profile-text">
+                Blood Group: {{ donationData.bloodGroup }}
+              </p>
+              <p class="profile-text">
+                Available for donation: {{ donationData.AvailableDateNTime }}
+              </p>
+              <p class="profile-text">City: {{ donationData.city }}</p>
+              <p class="profile-text">Country: {{ donationData.country }}</p>
+              <p class="profile-text">State: {{ donationData.state }}</p>
+              <p class="profile-text">
+                Health Issue: {{ donationData.healthIssue ? "YES" : "NO" }}
+              </p>
+              <p class="profile-text">
+                Last Donation Time: {{ donationData.lastDonationTime }}
+              </p>
+              <p class="profile-text">
+                Health Condition: {{ donationData.descriptionHealthCondition }}
+              </p>
+              <p class="profile-text">
+                Medicine Consumption: {{ donationData.medicineConsumption }}
+              </p>
+              <p class="profile-text">Birth Date: {{ donationData.birthDate }}</p>
+              <p class="profile-text">Gender: {{ donationData.gender }}</p>
+              <p class="profile-text">
+                Occupation: {{ donationData.occupation }}
+              </p>
+              <p class="profile-text">
+                Center / Colony / Village: {{ donationData.centerColonyVillage }}
+              </p>
+              <p class="profile-text">Weight: {{ donationData.weight }}</p>
+              <p class="profile-text">Pulse: {{ donationData.pulse }}</p>
+              <p class="profile-text">Haemoglobin: {{ donationData.hb }}</p>
+              <p class="profile-text">Blood Pressure: {{ donationData.bp }}</p>
+              <p class="profile-text">
+                Temperature: {{ donationData.temperature }}
+              </p>
+              <p class="profile-text">
+                In the last six months, have you had any of the following?
+                {{ donationData.lastSixMonth }}
+              </p>
+              <p class="profile-text">
+                Do you suffer from or have suffered from any of the following
+                diseases? {{ donationData.sufferFrom }}
+              </p>
+              <p class="profile-text">
+                Are you taking or have you taken any of these in the past 72
+                hours? {{ donationData.taking }}
+              </p>
+              <p class="profile-text">
+                Is there any history of surgery or blood transfusion in the past
+                six months? {{ donationData.surgeryHistoryString }}
+              </p>
+            </div>
+            <div class="center-button">
+              <button mat-raised-button color="primary" (click)="addDonation()">
+                Add
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  

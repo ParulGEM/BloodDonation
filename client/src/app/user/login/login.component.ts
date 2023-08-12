@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BloodDonationService } from 'src/app/service/blood-donation.service';
+
 import { Router } from '@angular/router';
+import { BloodDonationService } from 'src/app/service/blood-donation.service';
 import { HttpCallsService } from 'src/app/service/http-calls.service';
 
 @Component({
@@ -14,7 +14,6 @@ export class LoginComponent {
   HttpCalls: any;
   bloodDonationServiceData: any;
   constructor(
-    private http: HttpClient,
     private bloodDonationService: BloodDonationService,
     private router: Router,
     private httpCallsService: HttpCallsService

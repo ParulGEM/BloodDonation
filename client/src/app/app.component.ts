@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BloodDonationService } from './service/blood-donation.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +11,6 @@ export class AppComponent implements OnInit {
   bloodDonationServiceData: any;
   constructor(
     private bloodDonation: BloodDonationService,
-    // private http: HttpClient,
     private router: Router
   ) {
     this.bloodDonationServiceData = bloodDonation;

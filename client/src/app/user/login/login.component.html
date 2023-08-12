@@ -1,69 +1,70 @@
 <section class="vh-100 mt-5">
-  <div class="container py-5 h-100">
-    <div class="row d-flex align-items-center justify-content-center h-100">
-      <div class="col-md-8 col-lg-7 col-xl-6">
-        <img src="assets\LoginImage.jpg" class="img-fluid" alt="Phone image" />
-      </div>
-      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
-          <!-- Email input -->
-          <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example13">Email address*</label>
-
-            <input
-              type="email"
-              placeholder="Enter email"
-              formControlName="email"
-              id="form1Example13"
-              class="form-control form-control-lg"
-              required
-            />
-            <span
-            [ngStyle]="{ color: 'red' }"
-            *ngIf="email && email.invalid && email.touched"
-            >*Enter valid Email</span
-          >
-          </div>
-
-          <!-- Password input -->
-          <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example23">Password*</label>
-
-            <input
-              type="password"
-              placeholder="Enter password"
-              formControlName="password"
-              required
-              id="form1Example23"
-              class="form-control form-control-lg"
-            />
-            <span
-            [ngStyle]="{ color: 'red' }"
-            *ngIf="password && password.invalid && password.touched"
-            >*Enter a valid password</span
-          >
-          </div>
-
-          <div
-            class="d-flex justify-content-around align-items-center mb-4"
-          ></div>
-
-          <!-- Submit button -->
-          <button
-            type="submit"
-            class="d-flex justify-content-around align-items-center mb-4 btn btn-danger btn-lg btn-block"
-            [disabled]="loginForm.invalid">
-            Login
-          </button>
-        </form>
-        <div class="divider d-flex align-items-center my-4">
-          <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="assets\LoginImage.jpg" class="img-fluid" alt="Phone image" />
         </div>
-        <span
-          >Don't have an account?
-          <a routerLink="/user/registration">Register Yourself</a></span
-        >
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" for="form1Example13">Email address*</label>
+  
+              <input
+                type="email"
+                placeholder="Enter email"
+                formControlName="email"
+                id="form1Example13"
+                class="form-control form-control-lg"
+                required
+              />
+              <span
+              [ngStyle]="{ color: 'red' }"
+              *ngIf="email && email.invalid && email.touched"
+              >*Enter valid Email</span
+            >
+            </div>
+  
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" for="form1Example23">Password*</label>
+  
+              <input
+                type="password"
+                placeholder="Enter password"
+                formControlName="password"
+                required
+                id="form1Example23"
+                class="form-control form-control-lg"
+              />
+              <span
+              [ngStyle]="{ color: 'red' }"
+              *ngIf="password && password.invalid && password.touched"
+              >*Enter a valid password</span
+            >
+            </div>
+  
+            <div
+              class="d-flex justify-content-around align-items-center mb-4"
+            ></div>
+  
+            <!-- Submit button -->
+            <button
+              type="submit"
+              class="d-flex justify-content-around align-items-center mb-4 btn btn-danger btn-lg btn-block"
+              [disabled]="loginForm.invalid">
+              Login
+            </button>
+          </form>
+          <div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+          </div>
+          <span
+            >Don't have an account?
+            <a routerLink="/user/registration">Register Yourself</a></span
+          >
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  
