@@ -7,15 +7,22 @@ import { DonationDetailsComponent } from './donation-details/donation-details.co
 import { MyDonationsComponent } from './my-donations/my-donations.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UserAuthGuard } from '../service/authguard/user-auth.guard';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   {
     path: 'search',
     component: SearchComponent,
     canActivate: [UserAuthGuard],
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent },
+  {
+    path: 'user',
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'registration', component: RegistrationComponent },
+    ],
+  },
   {
     path: 'details/:id',
     component: DonationDetailsComponent,

@@ -31,8 +31,8 @@ export class AdminAuthGuard implements CanActivate {
     if (this.BloodDonation.userData.userType === 'ADMIN') {
       return true;
     } else {
-      this.router.navigate(['/']);
       this.BloodDonation.showAlert('error', 'unauthorized');
+      this.router.navigate(['/']);
       return false;
     }
   }
