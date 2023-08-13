@@ -24,6 +24,6 @@ export class MyProfileComponent {
       'this.bloodDonationServiceData.editUser',
       this.bloodDonationServiceData.editUser
     );
-    this.router.navigate(['/useredit', this.userData.userId]);
+    this.router.navigate(['edit/user', this.userData.userId]);
   }
 }

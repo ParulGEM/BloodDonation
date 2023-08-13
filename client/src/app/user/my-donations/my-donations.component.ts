@@ -47,6 +47,6 @@ export class MyDonationsComponent implements OnInit {
   }
   onClickEdit(donor: any) {
     this.bloodDonationServiceData.donationEdit = donor;
-    this.router.navigate(['/donationedit', donor._id]);
+    this.router.navigate(['edit/donation', donor._id]);
   }
 }

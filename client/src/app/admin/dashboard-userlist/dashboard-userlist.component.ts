@@ -58,7 +58,7 @@ export class DashboardUserlistComponent implements OnInit {
   }
   onClickEdit(user: any) {
     this.bloodDonationServiceData.editUser = user;
-    this.router.navigate(['/useredit', user._id]);
+    this.router.navigate(['edit/user', user._id]);
   }
   onClickDelete(user: any) {
     this.HttpCalls.deleteApi('dashboard/user', { userId: user._id }).subscribe(

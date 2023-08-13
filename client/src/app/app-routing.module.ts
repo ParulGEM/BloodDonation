@@ -17,15 +17,22 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'useredit/:id',
-    component: UserEditComponent,
-    canActivate: [UserAuthGuard],
+    path: 'edit',
+    loadChildren: () =>
+      import('./shared/shared-routing.module').then(
+        (m) => m.SharedRoutingModule
+      ),
   },
-  {
-    path: 'donationedit/:id',
-    component: DonationEditComponent,
-    canActivate: [UserAuthGuard],
-  },
+  // {
+  //   path: 'useredit/:id',
+  //   component: UserEditComponent,
+  //   canActivate: [UserAuthGuard],
+  // },
+  // {
+  //   path: 'donationedit/:id',
+  //   component: DonationEditComponent,
+  //   canActivate: [UserAuthGuard],
+  // },
   {
     path: 'dashboard',
     loadChildren: () =>
