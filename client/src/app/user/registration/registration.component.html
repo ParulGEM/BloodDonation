@@ -1,186 +1,187 @@
 <!-- Section: Design Block -->
 <section class="mt-5">
-  <!-- Jumbotron -->
-  <div
-    class="px-4 py-5 px-md-5 text-center text-lg-start"
-    style="background-color: hsl(0, 0%, 100%)"
-  >
-    <div class="container">
-      <div class="row gx-lg-5 align-items-center">
-        <div class="col-lg-6 mb-5 mb-lg-0">
-          <h1 class="my-5 mb-1 display-3 fw-bold ls-tight">
-            Be the Lifeline<br />
-          </h1>
-          <h2 class="display-3 fw-bold ls-tight">
-            <span class="text-danger">Save Lives</span>
-          </h2>
-          <h3>Donors and recipients: Bound by blood, united by love</h3>
-          <p style="color: hsl(0, 48%, 61%)">
-            Your blood donation today could be the lifeline for a child, a
-            parent, a friend - someone who dreams of a brighter tomorrow. Share
-            the gift of life and be their ray of hope
-          </p>
-        </div>
-
-        <div class="col-lg-6 mb-5 mb-lg-0">
-          <div class="card shadow">
-            <div class="card-body py-5 px-md-5">
-              <form [formGroup]="registerForm" (ngSubmit)="onSubmit($event)">
-                <!-- 2 column grid layout with text inputs for the first and last names -->
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <label class="form-label" for="form3Example1">Name*</label>
-                      <input
-                        type="text"
-                        placeholder="Enter name"
-                        formControlName="name"
-                        id="form3Example1"
-                        class="form-control"
-                        (keypress)="onlyAlphabet($event)"
-                        required
-                      />
-                      <span
+    <!-- Jumbotron -->
+    <div
+      class="px-4 py-5 px-md-5 text-center text-lg-start"
+      style="background-color: hsl(0, 0%, 100%)"
+    >
+      <div class="container">
+        <div class="row gx-lg-5 align-items-center">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <h1 class="my-5 mb-1 display-3 fw-bold ls-tight">
+              Be the Lifeline<br />
+            </h1>
+            <h2 class="display-3 fw-bold ls-tight">
+              <span class="text-danger">Save Lives</span>
+            </h2>
+            <h3>Donors and recipients: Bound by blood, united by love</h3>
+            <p style="color: hsl(0, 48%, 61%)">
+              Your blood donation today could be the lifeline for a child, a
+              parent, a friend - someone who dreams of a brighter tomorrow. Share
+              the gift of life and be their ray of hope
+            </p>
+          </div>
+  
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="card shadow">
+              <div class="card-body py-5 px-md-5">
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit($event)">
+                  <!-- 2 column grid layout with text inputs for the first and last names -->
+                  <div class="row">
+                    <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                        <label class="form-label" for="form3Example1">Name*</label>
+                        <input
+                          type="text"
+                          placeholder="Enter name"
+                          formControlName="name"
+                          id="form3Example1"
+                          class="form-control"
+                          (keypress)="onlyAlphabet($event)"
+                          required
+                        />
+                        <span
+                      [ngStyle]="{ color: 'red' }"
+                      *ngIf="name && name.invalid && name.touched"
+                      >*Enter a valid Name</span
+                    >
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                        <label class="form-label" for="form3Example2"
+                          >Phone*</label
+                        >
+                        <input
+                          type="tel"
+                          placeholder="Enter phone"
+                          formControlName="phone"
+                          id="form3Example2"
+                          class="form-control"
+                          (keypress)="onlyNumber($event)"
+                          required
+                        />
+                        <span
+                        [ngStyle]="{ color: 'red' }"
+                        *ngIf="phone && phone.invalid && phone.touched"
+                        >*Enter a valid 10 digit Number</span
+                      >
+                      </div>
+                    </div>
+                  </div>
+  
+                  <!-- Email input -->
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example3"
+                      >Email address*</label
+                    >
+                    <input
+                      type="email"
+                      placeholder="Enter email"
+                      formControlName="email"
+                      id="form3Example3"
+                      class="form-control"
+                      required
+                    />
+                    <span
+                      [ngStyle]="{ color: 'red' }"
+                      *ngIf="email && email.invalid && email.touched"
+                      >*Enter valid Email</span
+                    >
+                  </div>
+  
+                  <!-- Password input -->
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example4">Password*</label>
+                    <input
+                      type="password"
+                      placeholder="Enter password"
+                      formControlName="password"
+                      id="form3Example4"
+                      class="form-control"
+                      required
+                    />
+                    <span
                     [ngStyle]="{ color: 'red' }"
-                    *ngIf="name && name.invalid && name.touched"
-                    >*Enter a valid Name</span
+                    *ngIf="password && password.invalid && password.touched"
+                    >*Enter a valid password</span
                   >
-                    </div>
                   </div>
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <label class="form-label" for="form3Example2"
-                        >Phone*</label
+                  <div class="row">
+                    <div class="col-md-3 mb-4">
+                      <div class="form-outline">
+                        <label class="form-label" for="form3Example1">City*</label>
+                        <input
+                          type="text"
+                          placeholder="Enter city"
+                          formControlName="city"
+                          id="form3Example1"
+                          class="form-control"
+                          (keypress)="onlyAlphabet($event)"
+                          required
+                        />
+                        <span
+                        [ngStyle]="{ color: 'red' }"
+                        *ngIf="city && city.invalid && city.touched"
+                        >*Invalid City</span
                       >
-                      <input
-                        type="tel"
-                        placeholder="Enter phone"
-                        formControlName="phone"
-                        id="form3Example2"
-                        class="form-control"
-                        (keypress)="onlyNumber($event)"
-                        required
-                      />
-                      <span
-                      [ngStyle]="{ color: 'red' }"
-                      *ngIf="phone && phone.invalid && phone.touched"
-                      >*Enter a valid 10 digit Number</span
-                    >
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example3"
-                    >Email address*</label
-                  >
-                  <input
-                    type="email"
-                    placeholder="Enter email"
-                    formControlName="email"
-                    id="form3Example3"
-                    class="form-control"
-                    required
-                  />
-                  <span
-                    [ngStyle]="{ color: 'red' }"
-                    *ngIf="email && email.invalid && email.touched"
-                    >*Enter valid Email</span
-                  >
-                </div>
-
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="form3Example4">Password*</label>
-                  <input
-                    type="password"
-                    placeholder="Enter password"
-                    formControlName="password"
-                    id="form3Example4"
-                    class="form-control"
-                    required
-                  />
-                  <span
-                  [ngStyle]="{ color: 'red' }"
-                  *ngIf="password && password.invalid && password.touched"
-                  >*Enter a valid password</span
-                >
-                </div>
-                <div class="row">
-                  <div class="col-md-3 mb-4">
-                    <div class="form-outline">
-                      <label class="form-label" for="form3Example1">City*</label>
-                      <input
-                        type="text"
-                        placeholder="Enter city"
-                        formControlName="city"
-                        id="form3Example1"
-                        class="form-control"
-                        (keypress)="onlyAlphabet($event)"
-                        required
-                      />
-                      <span
-                      [ngStyle]="{ color: 'red' }"
-                      *ngIf="city && city.invalid && city.touched"
-                      >*Invalid City</span
-                    >
-                    </div>
-                  </div>
-                  <div class="col-md-3 mb-4">
-                    <div class="form-outline">
-                      <label class="form-label" for="form3Example2"
-                        >State*</label
+                    <div class="col-md-3 mb-4">
+                      <div class="form-outline">
+                        <label class="form-label" for="form3Example2"
+                          >State*</label
+                        >
+                        <input
+                          type="text"
+                          placeholder="Enter state"
+                          formControlName="state"
+                          id="form3Example2"
+                          class="form-control"
+                          (keypress)="onlyAlphabet($event)"
+                          required
+                        />
+                        <span
+                        [ngStyle]="{ color: 'red' }"
+                        *ngIf="state && state.invalid && state.touched"
+                        >*Invalid State</span
                       >
-                      <input
-                        type="text"
-                        placeholder="Enter state"
-                        formControlName="state"
-                        id="form3Example2"
-                        class="form-control"
-                        (keypress)="onlyAlphabet($event)"
-                        required
-                      />
-                      <span
-                      [ngStyle]="{ color: 'red' }"
-                      *ngIf="state && state.invalid && state.touched"
-                      >*Invalid State</span
-                    >
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-md-3 mb-4">
-                    <div class="form-outline">
-                      <label class="form-label" for="form3Example2"
-                        >Country*</label
+                    <div class="col-md-3 mb-4">
+                      <div class="form-outline">
+                        <label class="form-label" for="form3Example2"
+                          >Country*</label
+                        >
+                        <input
+                          type="text"
+                          placeholder="Enter country"
+                          formControlName="country"
+                          id="form3Example2"
+                          class="form-control"
+                          (keypress)="onlyAlphabet($event)"
+                          required
+                        />
+                        <span
+                        [ngStyle]="{ color: 'red' }"
+                        *ngIf="country && country.invalid && country.touched"
+                        >*Invalid County</span
                       >
-                      <input
-                        type="text"
-                        placeholder="Enter country"
-                        formControlName="country"
-                        id="form3Example2"
-                        class="form-control"
-                        (keypress)="onlyAlphabet($event)"
-                        required
-                      />
-                      <span
-                      [ngStyle]="{ color: 'red' }"
-                      *ngIf="country && country.invalid && country.touched"
-                      >*Invalid County</span
-                    >
+                      </div>
                     </div>
                   </div>
-                </div>
-                <!-- Submit button -->
-                <button type="submit" [disabled]="registerForm.invalid" class="btn btn-danger btn-block mb-4">
-                  Sign up
-                </button>
-              </form>
+                  <!-- Submit button -->
+                  <button type="submit" [disabled]="registerForm.invalid" class="btn btn-danger btn-block mb-4">
+                    Sign up
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Jumbotron -->
-</section>
-<!-- Section: Design Block -->
+    <!-- Jumbotron -->
+  </section>
+  <!-- Section: Design Block -->
+  

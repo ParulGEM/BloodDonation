@@ -1,0 +1,76 @@
+<div class="mt-5 text-center" *ngIf="dashboardData.donationList.length === 0">
+    <h3 class="display-4">No Data Found</h3>
+  </div>
+  
+  <div class="mt-5 text-center" *ngIf="dashboardData.donationList.length > 0">
+    <table class="table table-striped table-hover mat-elevation-z8">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Blood Group</th>
+          <th>Health Issue</th>
+          <th>Last Donation Time</th>
+          <th>Description</th>
+          <th>Medicine Consumption</th>
+          <th>Created By</th>
+          <th>Actions</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let donation of dashboardData.donationList">
+          <tr>
+            <td>{{ donation.country }}</td>
+            <td>{{ donation.city }}</td>
+            <td>{{ donation.state }}</td>
+            <td>{{ donation.bloodGroup }}</td>
+            <td>{{ donation.healthIssue }}</td>
+            <td>{{ donation.lastDonationTime }}</td>
+            <td>{{ donation.descriptionHealthCondition }}</td>
+            <td>{{ donation.medicineConsumption }}</td>
+            <td>
+              {{ donation.createdBy.name }} ({{ donation.createdBy.email }})
+            </td>
+            <td>
+              <img
+                src="assets\circlereen.svg.png"
+                (click)="onRejectApprove(true, donation._id)"
+                style="height: 25px; width: 25px; cursor: pointer"
+                alt=""
+                srcset=""
+              />
+              <span>|</span>
+              <img
+                src="assets\Flat_cross_icon.svg.png"
+                (click)="onRejectApprove(false, donation._id)"
+                style="height: 25px; width: 25px; cursor: pointer"
+                alt=""
+                srcset=""
+              />
+            </td>
+            <td>
+              <img
+                src="assets\edit-icon.png"
+                (click)="onEdit(donation)"
+                class="edit-button"
+                alt="Edit"
+              />
+            </td>
+  
+            <td>
+              <img
+                src="assets\delete-icon.png"
+                (click)="onDelete(donation._id)"
+                class="delete-button"
+                alt="Delete"
+              />
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  
