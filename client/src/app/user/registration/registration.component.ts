@@ -45,7 +45,7 @@ export class RegistrationComponent {
   onlyAlphabet(event: any) {
     if (
       (event.charCode >= 65 && event.charCode <= 90) || // Capital letters (A-Z)
-      (event.charCode >= 97 && event.charCode <= 122)
+      (event.charCode >= 97 && event.charCode <= 122) || (event.charCode===32)
     ) {
       // Small letters (a-z)
       return true;
