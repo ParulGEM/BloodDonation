@@ -7,7 +7,7 @@ import { HttpCallsService } from 'src/app/service/http-calls.service';
 @Component({
   selector: 'app-dashboard-donationlist',
   templateUrl: './dashboard-donationlist.component.html',
-  styleUrls: ['./dashboard-donationlist.component.css'],
+  styleUrls: ['./dashboard-donationlist.component.scss'],
 })
 export class DashboardDonationlistComponent implements OnInit {
   bloodDonationServiceData: any;

@@ -8,7 +8,7 @@ import { HttpCallsService } from 'src/app/service/http-calls.service';
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.css'],
+  styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent {
   HttpCalls: any;

@@ -12,7 +12,7 @@ import { HttpCallsService } from 'src/app/service/http-calls.service';
 @Component({
   selector: 'app-donation-edit',
   templateUrl: './donation-edit.component.html',
-  styleUrls: ['./donation-edit.component.css'],
+  styleUrls: ['./donation-edit.component.scss'],
 })
 export class DonationEditComponent {
   donationForm!: FormGroup;

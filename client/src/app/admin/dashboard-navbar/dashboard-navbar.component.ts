@@ -5,7 +5,7 @@ import { BloodDonationService } from 'src/app/service/blood-donation.service';
 @Component({
   selector: 'app-dashboard-navbar',
   templateUrl: './dashboard-navbar.component.html',
-  styleUrls: ['./dashboard-navbar.component.css'],
+  styleUrls: ['./dashboard-navbar.component.scss'],
 })
 export class DashboardNavbarComponent {
   bloodDonationServiceData: any;

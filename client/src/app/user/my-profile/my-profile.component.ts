@@ -5,7 +5,7 @@ import { BloodDonationService } from 'src/app/service/blood-donation.service';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.css'],
+  styleUrls: ['./my-profile.component.scss'],
 })
 export class MyProfileComponent {
   bloodDonationServiceData: any;

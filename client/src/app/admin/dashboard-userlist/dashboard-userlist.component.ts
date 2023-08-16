@@ -8,7 +8,7 @@ import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-dashboard-userlist',
   templateUrl: './dashboard-userlist.component.html',
-  styleUrls: ['./dashboard-userlist.component.css'],
+  styleUrls: ['./dashboard-userlist.component.scss'],
 })
 export class DashboardUserlistComponent implements OnInit {
   dashboardData: any;
