@@ -12,7 +12,7 @@ import { HttpCallsService } from 'src/app/service/http-calls.service';
 @Component({
   selector: 'app-create-donation',
   templateUrl: './create-donation.component.html',
-  styleUrls: ['./create-donation.component.css'],
+  styleUrls: ['./create-donation.component.scss'],
 })
 export class CreateDonationComponent implements OnInit {
   donationForm!: FormGroup;

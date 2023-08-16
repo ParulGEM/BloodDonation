@@ -1,0 +1,18 @@
+
+$background-image-url: "/assets/donate-landing.jpg";
+
+.container {
+  margin-top: 60px;
+  background-image: url($background-image-url);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.edit-icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}

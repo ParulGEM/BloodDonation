@@ -6,7 +6,7 @@ import { HttpCallsService } from 'src/app/service/http-calls.service';
 @Component({
   selector: 'app-my-donations',
   templateUrl: './my-donations.component.html',
-  styleUrls: ['./my-donations.component.css'],
+  styleUrls: ['./my-donations.component.scss'],
 })
 export class MyDonationsComponent implements OnInit {
   myDonationData: any = [];
